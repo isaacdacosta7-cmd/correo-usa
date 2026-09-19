@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CORREO USA - Información para decidir</title>
+
+  <!-- Google Fonts: Playfair Display (Editorial Headlines) & Inter (Body/UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700;1,800&amp;display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#0D1B3D',
+            navyLight: '#162A5A',
+            redAccent: '#C8102E',
+            goldAccent: '#C49A22',
+            creamBg: '#F5F0E8',
+            inkText: '#1A1A1A',
+            mutedText: '#626262'
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Custom Compact Styles & Responsiveness Constraints */
+    body {
+      background-color: #F5F0E8;
+      color: #1A1A1A;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Chart Container strictly defined per guidelines with compact vertical limits */
+    .chart-container {
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      height: 220px;
+      max-height: 260px;
+    }
+
+    @media (min-width: 768px) {
+      .chart-container {
+        height: 250px;
+      }
+    }
+
+    /* Ticker animation */
+    @keyframes tickerMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-ticker {
+      display: flex;
+      width: max-content;
+      animation: tickerMove 35s linear infinite;
+    }
+    .animate-ticker:hover {
+      animation-play-state: paused;
+    }
+
+    /* Scrollbar hide helpers */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Editorial image safety: preserve faces in close-up photographs */
+    .editorial-face-safe {
+      object-fit: cover;
+      object-position: center 15%;
+    }
+
+    .editorial-face-safe-secondary {
+      object-fit: cover;
+      object-position: center 12%;
+    }
+
+    .editorial-article-full {
+      object-fit: contain;
+      object-position: center;
+      background: #0D1B3D;
+    }
+
+    /* Multi-line clamp */
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+
+  <!-- Chosen Palette: Warm Cream Background (#F5F0E8), Deep Navy (#0D1B3D), Crimson Red (#C8102E), Warm Gold (#C49A22) -->
+  <!-- Application Structure Plan:
+       1. Live Ticker: titulares de elecciones, economía, Fed y cobertura especial.
+       2. Utility Bar: fecha dinámica, descriptor editorial y controles de sesión/idioma.
+       3. Brand Bar: logo oficial, búsqueda y suscripción.
+       4. Primary Navigation: INICIO, PULSO HISPANO, ELECCIONES 2026, ESTADOS CLAVE, CONDADOS, ECONOMÍA, CULTURA, OPINIÓN, EL MUNDIAL 2026.
+       5. Home: noticia principal, secundaria, centro electoral, data center, estados clave y radar de condados.
+       6. Interactive Views: Pulso Hispano, Elecciones 2026, Estados, Condados, Economía, Cultura, Mundial 2026 y Opinión.
+       7. Newsletter & Footer: captación, ediciones locales e identidad institucional.
+  -->
+  <!-- Visualization & Content Choices:
+       1. Demografía por estado -> Bar Chart con U.S. Census Bureau QuickFacts / Vintage 2025.
+       2. Peso hispano por condado -> Bar Chart con Miami-Dade, Harris, Maricopa y Clark.
+       3. Mundial 2026 -> Encuesta de lectores sobre el legado del torneo; votos iniciados en cero por sesión.
+       4. Elecciones 2026 -> Fechas, escaños y radar editorial con fuentes oficiales.
+       5. Confirmation: NO SVG graphics used. NO Mermaid JS used.
+  -->
+  <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+
+
+  <!-- TOP TICKER BAR (COMPACT) -->
+  <div class="bg-redAccent text-white text-[10px] font-extrabold uppercase tracking-wider overflow-hidden border-b border-navy/20 relative z-50">
+    <div class="max-w-5xl mx-auto flex items-center justify-between px-3 py-1">
+      <div class="flex items-center space-x-1.5 shrink-0 mr-3 bg-navy px-1.5 py-0.5 rounded text-[9px] tracking-wider">
+        <span>ÚLTIMA HORA</span>
+        <button id="ticker-toggle-btn" onclick="toggleTicker()" class="text-goldAccent hover:underline focus:outline-none ml-1">⏸ Pausa</button>
+      </div>
+      <div class="overflow-hidden w-full relative">
+        <div id="ticker-track" class="animate-ticker space-x-4 whitespace-nowrap text-[10px] font-bold">
+          <span>ELECCIONES 2026: FLORIDA VOTA EN PRIMARIAS ESTE MARTES 18 DE AGOSTO</span>
+          <span class="text-navy font-black">■</span>
+          <span>ECONOMÍA: LA INFLACIÓN ANUAL DE JULIO SE UBICÓ EN 3,4%</span>
+          <span class="text-navy font-black">■</span>
+          <span>FED: LA TASA DE REFERENCIA SE MANTIENE ENTRE 3,50% Y 3,75%</span>
+          <span class="text-navy font-black">■</span>
+          <span>MUNDIAL 2026: ESPAÑA ES CAMPEONA TRAS VENCER 1-0 A ARGENTINA EN LA FINAL</span>
+          <span class="text-navy font-black">■</span>
+          <span>ELECCIONES 2026: FLORIDA VOTA EN PRIMARIAS ESTE MARTES 18 DE AGOSTO</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER (COMPACT) -->
+  </head>
+  <body>
+  <header class="bg-navy text-white sticky top-0 z-40 shadow-sm">
+    
+    <!-- Top Utility Bar -->
+    <div class="bg-navy border-b border-white/10">
+      <div class="max-w-5xl mx-auto px-3 py-1 flex flex-row justify-between items-center text-[10px] font-bold tracking-wider uppercase">
+        <div id="current-date-display" class="text-white/80 font-sans">DOMINGO, 16 DE AGOSTO DE 2026</div>
+        <div class="font-serif italic text-white/90 text-[11px] tracking-normal font-normal hidden sm:block">
+          "Información para decidir"
+        </div>
+        <div class="flex items-center space-x-2 text-white/80 text-[10px]">
+          <button onclick="switchEdition('ENG')" class="hover:text-goldAccent transition-colors">ENG</button>
+          <span class="text-white/30">|</span>
+          <button onclick="openModal('login')" class="hover:text-goldAccent transition-colors">INICIAR SESIÓN</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Branding Bar (White Background - Reduced Vertical Padding) -->
+    <div class="bg-white py-2 border-b border-navy/10">
+      <div class="max-w-5xl mx-auto px-3 flex flex-row justify-between items-center gap-2">
+        
+        <!-- Official Logo Image (Compact Height) -->
+        <a href="#" onclick="showSection('general')" class="flex items-center">
+          <img src="https://i.imgur.com/0un7YLr.png" alt="CORREO USA" class="h-7 sm:h-8 md:h-9 w-auto object-contain">
+        </a>
+
+        <!-- Search & Subscribe Controls -->
+        <div class="flex items-center space-x-3">
+          <div class="relative w-36 sm:w-48 md:w-56">
+            <input type="text" id="global-search" onkeyup="handleSearch()" placeholder="BUSCAR NOTICIAS..." class="w-full bg-transparent text-navy text-[11px] font-bold border-b border-navy/40 px-1.5 py-1 pl-5 focus:outline-none focus:border-redAccent placeholder-navy/50 tracking-wider">
+            <span class="absolute left-0 top-1 text-navy text-[10px] font-bold">⌕</span>
+          </div>
+          <button onclick="openModal('subscribe')" class="bg-redAccent hover:bg-navy text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 transition-colors shadow-sm shrink-0">
+            SUSCRIBIRSE
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Primary Navigation Bar (Compact Padding) -->
+    <nav class="bg-navy border-t border-white/10 overflow-x-auto no-scrollbar">
+      <div class="max-w-5xl mx-auto px-3">
+        <ul class="flex space-x-5 py-1.5 text-[11px] font-extrabold uppercase tracking-wider whitespace-nowrap">
+          <li>
+            <button onclick="showSection('general')" id="nav-btn-general" class="nav-tab text-goldAccent border-b-2 border-goldAccent pb-0.5">
+              INICIO
+            </button>
+          </li>
+          <li>
+            <button onclick="showSection('intelligence')" id="nav-btn-intelligence" class="nav-tab text-white hover:text-goldAccent border-b-2 border-transparent pb-0.5">
+              PULSO HISPANO
+            </button>
+          </li>
+          <li>
+            <button onclick="showSection('elecciones')" id="nav-btn-elecciones" class="nav-tab text-white hover:text-goldAccent border-b-2 border-transparent pb-0.5">
+              ELECCIONES 2026
+            </button>
+          </li>
+          <li>
+            <button onclick="showSection('estados')" id="nav-btn-estados" class="nav-tab text-white hover:text-goldAccent border-b-2 border-transparent pb-0.5">
+              ESTADOS CLAVE
+            </button>
+          </li>
+          <li>
+            <button onclick="showSection('condados')" id="nav-btn-condados" class="nav-tab text-white hover:text-goldAccent border-b-2 border-transparent pb-0.5">
+              CONDADOS
+            </button>
+          </li>
+          <li>
+            <button onclick="showSection('economia')" id="nav-btn-economia" class="nav-tab text-white hover:text-goldAccent border-b-2 border-transparent pb-0.5">
+              ECONOMÍA
+            </button>
+          </li>
+          <li>
+            <button onclick="showSection('cultura')" id="nav-btn-cultura" class="nav-tab text-white hover:text-goldAccent border-b-2 border-transparent pb-0.5">
+              CULTURA
+            </button>
+          </li>
+          <li>
+            <button onclick="showSection('opinion')" id="nav-btn-opinion" class="nav-tab text-white hover:text-goldAccent border-b-2 border-transparent pb-0.5">
+              OPINIÓN
+            </button>
+          </li>
+          <li>
+            <button onclick="showSection('mundial')" id="nav-btn-mundial" class="nav-tab text-white hover:text-goldAccent border-b-2 border-transparent pb-0.5 flex items-center">
+              <span>EL MUNDIAL 2026</span>
+              <span class="inline-block w-1.5 h-1.5 bg-redAccent ml-1"></span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER (COMPACT BOUNDS) -->
+  <main class="flex-grow max-w-5xl w-full mx-auto px-3 py-3 space-y-5">
+
+    <!-- VIEW 1: INICIO / GENERAL (OPTIMIZED FOR INSTANT VIEWPORT FIT) -->
+    <div id="view-general" class="view-panel space-y-5">
+      
+      <!-- HERO NEWS SECTION GRID (COMPACT PHOTO & HEADLINE ABOVE THE FOLD) -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-4 bg-white p-3 md:p-4 shadow-sm border border-navy/10">
+        
+        <!-- Left Main Featured Story (7 Cols) -->
+        <article class="lg:col-span-7 flex flex-col justify-between group cursor-pointer border-b lg:border-b-0 border-navy/10 pb-3 lg:pb-0" onclick="openStoryModal('hero-1')">
+          <div>
+            <div class="relative overflow-hidden bg-navy mb-2 h-44 sm:h-52 md:h-56 w-full shadow-sm">
+              <span class="absolute top-0 left-0 z-20 bg-redAccent text-white text-[9px] font-black uppercase tracking-widest px-2 py-0.5">
+                PULSO HISPANO
+              </span>
+              <!-- Photo matching voters/discussion room with compact height constraint -->
+              <img src="https://i.imgur.com/ZagT1NG.jpeg" alt="Elecciones y actualidad política en Estados Unidos" class="w-full h-full editorial-face-safe transition-transform duration-500">
+            </div>
+            
+            <h1 class="font-serif text-xl sm:text-2xl md:text-2xl font-extrabold text-navy group-hover:text-redAccent transition-colors leading-snug mb-1">
+              Florida vota este martes: el pulso hispano entra al centro de las primarias 2026
+            </h1>
+            <p class="text-mutedText text-[11px] leading-relaxed mb-2 font-sans line-clamp-2">
+              Con las primarias del 18 de agosto a horas de comenzar, Miami-Dade y el resto de Florida ofrecen una primera lectura del ánimo electoral rumbo al 3 de noviembre.
+            </p>
+          </div>
+
+          <div class="flex items-center space-x-2 text-[10px] font-bold text-navy/70 uppercase tracking-wider border-t border-navy/10 pt-1.5">
+            <span>Por Redacción Correo USA</span>
+            <span>•</span>
+            <span>6 min lectura</span>
+            <span>•</span>
+            <span class="text-redAccent hover:underline">Ver Análisis →</span>
+          </div>
+        </article>
+
+        <!-- Right Secondary News Column (5 Cols) -->
+        <div class="lg:col-span-5 flex flex-col justify-between space-y-3 lg:border-l lg:border-navy/10 lg:pl-4">
+          
+          <!-- Secondary Article 1 with Shipping Cargo Photo -->
+          <article class="group cursor-pointer border-b border-navy/10 pb-3" onclick="openStoryModal('hero-2')">
+            <div class="overflow-hidden bg-navy mb-1.5 h-24 sm:h-28 w-full">
+              <!-- Shipping Port Photo -->
+              <img src="https://i.imgur.com/IrKWYNr.jpeg" alt="Inflación y costo de vida en Estados Unidos" class="w-full h-full editorial-face-safe-secondary transition-transform duration-500">
+            </div>
+            <h2 class="font-serif text-sm font-extrabold text-navy group-hover:text-redAccent transition-colors mb-0.5 leading-tight">
+              Inflación en 3,4%: qué significa para el bolsillo antes de las elecciones
+            </h2>
+            <p class="text-mutedText text-[10px] leading-snug line-clamp-2">
+              Los precios moderaron su avance en julio mientras la Reserva Federal mantiene la tasa entre 3,50% y 3,75%.
+            </p>
+          </article>
+
+          <!-- Hot List / Sidebar Trending -->
+          <div class="bg-creamBg p-2.5 border border-navy/10">
+            <h3 class="text-[10px] font-black uppercase tracking-widest text-navy border-b-2 border-redAccent pb-1 mb-2">
+              También Hoy
+            </h3>
+            <ul class="space-y-1.5 text-[11px] font-bold text-navy">
+              <li class="flex items-start space-x-2 cursor-pointer hover:text-redAccent" onclick="openStoryModal('hot-1')">
+                <span class="font-serif text-sm font-black text-goldAccent">01</span>
+                <span class="leading-tight">Midterms 2026: 435 escaños de la Cámara estarán en juego.</span>
+              </li>
+              <li class="flex items-start space-x-2 cursor-pointer hover:text-redAccent" onclick="openStoryModal('hot-2')">
+                <span class="font-serif text-sm font-black text-goldAccent">02</span>
+                <span class="leading-tight">Inmigración: la ciudadanía por nacimiento vuelve al centro de la batalla judicial.</span>
+              </li>
+              <li class="flex items-start space-x-2 cursor-pointer hover:text-redAccent" onclick="openStoryModal('hot-3')">
+                <span class="font-serif text-sm font-black text-goldAccent">03</span>
+                <span class="leading-tight">Mundial 2026: España levanta su segunda Copa del Mundo.</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ELECCIONES 2026 QUICK CENTER -->
+      <section class="bg-white p-3 md:p-4 shadow-sm border border-navy/10">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div>
+            <span class="text-[10px] font-black uppercase tracking-widest text-redAccent">Camino al 3 de noviembre</span>
+            <h2 class="font-serif text-xl font-extrabold text-navy">Elecciones USA 2026</h2>
+            <p class="text-[11px] text-mutedText leading-snug mt-0.5">
+              La elección general será el 3 de noviembre. Los 435 escaños de la Cámara y 35 escaños del Senado estarán en juego.
+            </p>
+          </div>
+          <div class="grid grid-cols-3 gap-2 w-full md:w-auto shrink-0">
+            <div class="bg-creamBg border border-navy/10 px-3 py-2 text-center">
+              <span class="text-[9px] uppercase tracking-wider font-black text-goldAccent block">Cámara</span>
+              <span class="font-serif text-xl font-black text-navy">435</span>
+            </div>
+            <div class="bg-creamBg border border-navy/10 px-3 py-2 text-center">
+              <span class="text-[9px] uppercase tracking-wider font-black text-goldAccent block">Senado</span>
+              <span class="font-serif text-xl font-black text-navy">35</span>
+            </div>
+            <div class="bg-navy px-3 py-2 text-center text-white">
+              <span class="text-[9px] uppercase tracking-wider font-black text-goldAccent block">Faltan</span>
+              <span id="home-election-countdown" class="font-serif text-xl font-black">—</span>
+              <span class="text-[8px] uppercase block text-white/70">días</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3 pt-2 border-t border-navy/10 flex flex-col sm:flex-row justify-between gap-2 items-start sm:items-center">
+          <span class="text-[10px] font-bold text-navy">Florida: primarias estatales el martes 18 de agosto de 2026.</span>
+          <button onclick="showSection('elecciones')" class="text-[10px] font-extrabold text-redAccent hover:underline uppercase tracking-wider">
+            Abrir Centro Electoral →
+          </button>
+        </div>
+      </section>
+
+      <!-- DATA CENTER BANNER PREVIEW (COMPACT) -->
+      <section class="bg-navy text-white p-4 sm:p-5 shadow-sm relative overflow-hidden">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 relative z-10">
+          <div class="space-y-1 max-w-xl">
+            <span class="text-goldAccent text-[10px] font-black uppercase tracking-widest">Módulo de Inteligencia de Datos</span>
+            <h2 class="font-serif text-xl sm:text-2xl font-extrabold italic">Pulso Hispano Intelligence Center</h2>
+            <p class="text-white/80 text-xs leading-snug">
+              Consulte datos demográficos, contexto electoral y señales económicas para entender dónde está el peso hispano en 2026.
+            </p>
+          </div>
+          <button onclick="showSection('intelligence')" class="bg-goldAccent hover:bg-white text-navy font-extrabold text-[10px] uppercase tracking-widest px-4 py-2 transition-all shadow-sm shrink-0">
+            Explorar Tableros →
+          </button>
+        </div>
+      </section>
+
+      <!-- KEY STATES PREVIEW CARDS (COMPACT GRID) -->
+      <section class="space-y-3">
+        <div class="flex justify-between items-end border-b border-navy/20 pb-1.5">
+          <div>
+            <span class="text-[10px] font-black uppercase tracking-widest text-goldAccent">Geopolítica Regional</span>
+            <h2 class="font-serif text-xl font-extrabold text-navy">Estados Clave de un Vistazo</h2>
+          </div>
+          <button onclick="showSection('estados')" class="text-[10px] font-extrabold text-redAccent hover:underline uppercase tracking-wider">
+            Ver Todos →
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="showSection('estados'); selectState('FL')">
+            <div class="flex justify-between items-center mb-1.5">
+              <span class="font-serif text-lg font-black text-navy">Florida</span>
+              <span class="bg-redAccent text-white text-[8px] font-black px-1.5 py-0.5 uppercase tracking-widest">Primaria 18 Ago</span>
+            </div>
+            <p class="text-[11px] text-mutedText mb-2 leading-tight">Miami-Dade y Florida Central concentran atención rumbo a las primarias y las midterms.</p>
+            <div class="text-[10px] font-extrabold text-navy">Población hispana: <span class="text-redAccent">29,2%</span></div>
+          </div>
+
+          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="showSection('estados'); selectState('TX')">
+            <div class="flex justify-between items-center mb-1.5">
+              <span class="font-serif text-lg font-black text-navy">Texas</span>
+              <span class="bg-navy text-white text-[8px] font-black px-1.5 py-0.5 uppercase tracking-widest">Mapa 2026</span>
+            </div>
+            <p class="text-[11px] text-mutedText mb-2 leading-tight">El mapa congresional y el voto latino mantienen a Texas bajo observación nacional.</p>
+            <div class="text-[10px] font-extrabold text-navy">Población hispana: <span class="text-goldAccent">40,9%</span></div>
+          </div>
+
+          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="showSection('estados'); selectState('AZ')">
+            <div class="flex justify-between items-center mb-1.5">
+              <span class="font-serif text-lg font-black text-navy">Arizona</span>
+              <span class="bg-goldAccent text-navy text-[8px] font-black px-1.5 py-0.5 uppercase tracking-widest">Maricopa</span>
+            </div>
+            <p class="text-[11px] text-mutedText mb-2 leading-tight">Maricopa vuelve a ser un punto central para medir participación y prioridades hispanas.</p>
+            <div class="text-[10px] font-extrabold text-navy">Población hispana: <span class="text-redAccent">32,5%</span></div>
+          </div>
+
+          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="showSection('estados'); selectState('NV')">
+            <div class="flex justify-between items-center mb-1.5">
+              <span class="font-serif text-lg font-black text-navy">Nevada</span>
+              <span class="bg-redAccent text-white text-[8px] font-black px-1.5 py-0.5 uppercase tracking-widest">Clark County</span>
+            </div>
+            <p class="text-[11px] text-mutedText mb-2 leading-tight">Clark County concentra población, servicios y una comunidad hispana decisiva para la agenda local.</p>
+            <div class="text-[10px] font-extrabold text-navy">Población hispana: <span class="text-redAccent">31,2%</span></div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- COUNTY RADAR PREVIEW -->
+      <section class="space-y-3">
+        <div class="flex justify-between items-end border-b border-navy/20 pb-1.5">
+          <div>
+            <span class="text-[10px] font-black uppercase tracking-widest text-goldAccent">Cobertura Local</span>
+            <h2 class="font-serif text-xl font-extrabold text-navy">Condados en el Radar</h2>
+          </div>
+          <button onclick="showSection('condados')" class="text-[10px] font-extrabold text-redAccent hover:underline uppercase tracking-wider">
+            Ver Condados →
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="openCountyModal('MIA')">
+            <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">Florida</span>
+            <h3 class="font-serif text-base font-black text-navy mt-0.5">Miami-Dade</h3>
+            <p class="text-[10px] text-mutedText leading-tight mt-1">Política local, inmigración, vivienda y voto hispano.</p>
+            <div class="text-[10px] font-extrabold text-navy mt-2">Hispanos: <span class="text-redAccent">70,6%</span></div>
+          </div>
+
+          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="openCountyModal('HAR')">
+            <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">Texas</span>
+            <h3 class="font-serif text-base font-black text-navy mt-0.5">Harris</h3>
+            <p class="text-[10px] text-mutedText leading-tight mt-1">Houston, economía, distritos congresionales y comunidad latina.</p>
+            <div class="text-[10px] font-extrabold text-navy mt-2">Hispanos: <span class="text-goldAccent">46,1%</span></div>
+          </div>
+
+          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="openCountyModal('MAR')">
+            <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">Arizona</span>
+            <h3 class="font-serif text-base font-black text-navy mt-0.5">Maricopa</h3>
+            <p class="text-[10px] text-mutedText leading-tight mt-1">Phoenix, crecimiento demográfico y agenda electoral.</p>
+            <div class="text-[10px] font-extrabold text-navy mt-2">Hispanos: <span class="text-redAccent">32,3%</span></div>
+          </div>
+
+          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="openCountyModal('CLK')">
+            <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">Nevada</span>
+            <h3 class="font-serif text-base font-black text-navy mt-0.5">Clark</h3>
+            <p class="text-[10px] text-mutedText leading-tight mt-1">Las Vegas, servicios, empleo y participación comunitaria.</p>
+            <div class="text-[10px] font-extrabold text-navy mt-2">Hispanos: <span class="text-redAccent">33,4%</span></div>
+          </div>
+        </div>
+        <div class="text-[9px] text-mutedText">Datos demográficos: U.S. Census Bureau, QuickFacts / Vintage 2025.</div>
+      </section>
+
+    </div>
+
+    <!-- VIEW 2: PULSO HISPANO INTELLIGENCE (DATA CENTER) -->
+    <div id="view-intelligence" class="view-panel hidden space-y-5">
+      
+      <!-- Section Intro Header -->
+      <div class="bg-navy text-white p-4 sm:p-5 shadow-sm border-b-2 border-goldAccent">
+        <span class="text-goldAccent text-[10px] font-black uppercase tracking-widest">Centro de Análisis Avanzado</span>
+        <h2 class="font-serif text-2xl font-extrabold mt-0.5">Pulso Hispano Intelligence</h2>
+        <p class="text-white/80 text-xs mt-1 max-w-2xl leading-relaxed">
+          Esta sección reúne datos demográficos recientes para entender el peso hispano por estado y por condado durante el ciclo electoral de 2026.
+        </p>
+      </div>
+
+      <!-- Controls & Filter Toolbar -->
+      <div class="bg-white p-3 border border-navy/10 flex flex-wrap gap-3 items-center justify-between shadow-sm">
+        <div class="flex items-center space-x-2">
+          <label for="chart-state-filter" class="text-[10px] font-bold uppercase text-navy">Filtrar por Enfoque:</label>
+          <select id="chart-state-filter" onchange="updateIntelligenceCharts()" class="bg-creamBg text-navy text-[11px] font-bold border border-navy/20 px-2 py-1 focus:outline-none">
+            <option value="all">Todos los Estados Clave</option>
+            <option value="border">Estados Fronterizos (TX, AZ, NM, CA)</option>
+            <option value="swing">Alta atención editorial (FL, NV, AZ)</option>
+          </select>
+        </div>
+        <div class="text-[10px] text-mutedText font-semibold">
+          Datos base: <span class="text-navy font-bold">U.S. Census Bureau Vintage 2025</span>
+        </div>
+      </div>
+
+      <!-- VISUALIZATIONS GRID -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        
+        <!-- Chart 1: Demographic Weight -->
+        <div class="bg-white p-4 border border-navy/10 shadow-sm space-y-2">
+          <div class="border-b border-navy/10 pb-1.5">
+            <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">Demografía y Participación</span>
+            <h3 class="font-serif text-base font-bold text-navy">Proporción Poblacional Hispana por Estado (%)</h3>
+          </div>
+          <p class="text-[11px] text-mutedText">
+            Porcentaje de la comunidad latina sobre la población total de cada estado.
+          </p>
+          <div class="chart-container">
+            <canvas id="demographicsChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 2: Economic Impact -->
+        <div class="bg-white p-4 border border-navy/10 shadow-sm space-y-2">
+          <div class="border-b border-navy/10 pb-1.5">
+            <span class="text-[9px] font-black uppercase tracking-widest text-goldAccent">Radar Local</span>
+            <h3 class="font-serif text-base font-bold text-navy">Peso Hispano en Condados Seleccionados (%)</h3>
+          </div>
+          <p class="text-[11px] text-mutedText">
+            Comparación de la proporción hispana en cuatro condados prioritarios para la cobertura local.
+          </p>
+          <div class="chart-container">
+            <canvas id="economicsChart"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- DYNAMIC STATE METRICS MATRIX -->
+      <div class="bg-white p-4 border border-navy/10 shadow-sm space-y-3">
+        <h3 class="font-serif text-lg font-bold text-navy border-b border-navy/10 pb-1.5">
+          Matriz Detallada de Inteligencia Estatal
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3" id="intelligence-cards-container">
+          <!-- Dynamic rendering via JS -->
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- VIEW: ELECCIONES USA 2026 -->
+    <div id="view-elecciones" class="view-panel hidden space-y-5">
+      <div class="bg-navy text-white p-4 sm:p-5 shadow-sm border-b-2 border-redAccent">
+        <span class="text-goldAccent text-[10px] font-black uppercase tracking-widest">Centro Electoral Correo USA</span>
+        <h2 class="font-serif text-2xl font-extrabold mt-0.5">Elecciones USA 2026</h2>
+        <p class="text-white/80 text-xs mt-1 max-w-2xl leading-relaxed">
+          Guía editorial para seguir las primarias, las carreras al Congreso y los temas que movilizan al electorado hispano rumbo al 3 de noviembre.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="bg-white p-4 border border-navy/10 shadow-sm">
+          <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">Elección General</span>
+          <div class="font-serif text-2xl font-black text-navy mt-1">3 NOV 2026</div>
+          <p class="text-[10px] text-mutedText mt-1">Fecha de la elección federal general.</p>
+        </div>
+        <div class="bg-white p-4 border border-navy/10 shadow-sm">
+          <span class="text-[9px] font-black uppercase tracking-widest text-goldAccent">Cámara de Representantes</span>
+          <div class="font-serif text-2xl font-black text-navy mt-1">435</div>
+          <p class="text-[10px] text-mutedText mt-1">Todos los escaños de la Cámara se eligen en este ciclo.</p>
+        </div>
+        <div class="bg-white p-4 border border-navy/10 shadow-sm">
+          <span class="text-[9px] font-black uppercase tracking-widest text-goldAccent">Senado</span>
+          <div class="font-serif text-2xl font-black text-navy mt-1">35</div>
+          <p class="text-[10px] text-mutedText mt-1">Escaños senatoriales previstos en la boleta del ciclo 2026.</p>
+        </div>
+      </div>
+
+      <div class="bg-white border-l-4 border-redAccent p-4 shadow-sm">
+        <div class="flex flex-col md:flex-row justify-between gap-3">
+          <div>
+            <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">Lo inmediato</span>
+            <h3 class="font-serif text-lg font-extrabold text-navy">Florida celebra sus primarias el 18 de agosto</h3>
+            <p class="text-[11px] text-mutedText mt-1 max-w-2xl">
+              El período obligatorio de votación anticipada terminó el 15 de agosto. La elección primaria estatal se celebra este martes.
+            </p>
+          </div>
+          <div class="bg-creamBg border border-navy/10 p-3 shrink-0 min-w-[160px] text-center">
+            <span class="text-[9px] font-black uppercase tracking-wider text-goldAccent block">Rumbo a noviembre</span>
+            <span id="election-countdown" class="font-serif text-3xl font-black text-navy">—</span>
+            <span class="text-[9px] uppercase font-bold text-mutedText block">días restantes</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <div class="border-b border-navy/20 pb-1.5">
+          <span class="text-[10px] font-black uppercase tracking-widest text-goldAccent">Radar Hispano 2026</span>
+          <h3 class="font-serif text-xl font-extrabold text-navy">Cuatro territorios para seguir</h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <button onclick="selectState('FL'); showSection('estados');" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+            <span class="text-[9px] font-black text-redAccent uppercase tracking-widest">Florida</span>
+            <h4 class="font-serif font-bold text-navy">Primarias, Miami-Dade y voto hispano</h4>
+            <p class="text-[10px] text-mutedText mt-1">El sur de Florida vuelve a ser un laboratorio para medir cambios dentro de un electorado latino diverso.</p>
+          </button>
+          <button onclick="selectState('TX'); showSection('estados');" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+            <span class="text-[9px] font-black text-redAccent uppercase tracking-widest">Texas</span>
+            <h4 class="font-serif font-bold text-navy">Distritos, rediseño electoral y bolsillo</h4>
+            <p class="text-[10px] text-mutedText mt-1">Las carreras congresionales y el costo de vida concentran atención en áreas con fuerte presencia latina.</p>
+          </button>
+          <button onclick="selectState('AZ'); showSection('estados');" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+            <span class="text-[9px] font-black text-redAccent uppercase tracking-widest">Arizona</span>
+            <h4 class="font-serif font-bold text-navy">Maricopa y participación electoral</h4>
+            <p class="text-[10px] text-mutedText mt-1">El condado más poblado del estado sigue siendo una pieza central del seguimiento electoral.</p>
+          </button>
+          <button onclick="selectState('NV'); showSection('estados');" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+            <span class="text-[9px] font-black text-redAccent uppercase tracking-widest">Nevada</span>
+            <h4 class="font-serif font-bold text-navy">Clark County, empleo y servicios</h4>
+            <p class="text-[10px] text-mutedText mt-1">La economía de servicios y la concentración poblacional de Las Vegas marcan la cobertura local.</p>
+          </button>
+        </div>
+      </div>
+
+      <div class="text-[9px] text-mutedText border-t border-navy/10 pt-2">
+        Fechas y estructura electoral: FEC, USA.gov y autoridades electorales estatales. La cobertura editorial debe actualizarse conforme se publiquen resultados oficiales.
+      </div>
+    </div>
+
+    <!-- VIEW: ESTADOS CLAVE EXPLORER -->
+    <div id="view-estados" class="view-panel hidden space-y-5">
+      
+      <!-- Section Intro Header -->
+      <div class="bg-white p-4 border-l-4 border-goldAccent shadow-sm space-y-1">
+        <span class="text-[10px] font-black uppercase tracking-widest text-goldAccent">Módulo Geopolítico</span>
+        <h2 class="font-serif text-2xl font-extrabold text-navy">Explorador de Estados Clave</h2>
+        <p class="text-xs text-mutedText leading-relaxed">
+          Seleccione cualquiera de los estados estratégicos para analizar su contexto político, perfil económico y retos socioeducativos.
+        </p>
+      </div>
+
+      <!-- State Navigation Tabs -->
+      <div class="flex flex-wrap gap-1.5 border-b border-navy/20 pb-1.5" id="state-tabs-list">
+        <!-- Rendered dynamically via JS -->
+      </div>
+
+      <!-- State Detail Interactive Display Card -->
+      <div id="state-detail-card" class="bg-white p-4 md:p-5 border border-navy/10 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <!-- Rendered dynamically via JS -->
+      </div>
+
+    </div>
+
+
+    <!-- VIEW: CONDADOS -->
+    <div id="view-condados" class="view-panel hidden space-y-5">
+      <div class="bg-white p-4 border-l-4 border-goldAccent shadow-sm space-y-1">
+        <span class="text-[10px] font-black uppercase tracking-widest text-goldAccent">Ediciones Locales</span>
+        <h2 class="font-serif text-2xl font-extrabold text-navy">Condados en el Radar</h2>
+        <p class="text-xs text-mutedText leading-relaxed">
+          Primera red local de Correo USA para organizar noticias por territorio. Cada ficha puede convertirse después en una página automática de WordPress.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <button onclick="openCountyModal('MIA')" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+          <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">FLORIDA</span>
+          <h3 class="font-serif text-lg font-black text-navy">Miami-Dade</h3>
+          <div class="font-serif text-2xl font-black text-redAccent mt-2">70,6%</div>
+          <span class="text-[9px] uppercase font-bold text-mutedText">Población hispana</span>
+          <p class="text-[10px] text-mutedText mt-2">Elecciones, inmigración, vivienda, negocios y comunidad.</p>
+        </button>
+
+        <button onclick="openCountyModal('HAR')" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+          <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">TEXAS</span>
+          <h3 class="font-serif text-lg font-black text-navy">Harris</h3>
+          <div class="font-serif text-2xl font-black text-goldAccent mt-2">46,1%</div>
+          <span class="text-[9px] uppercase font-bold text-mutedText">Población hispana</span>
+          <p class="text-[10px] text-mutedText mt-2">Houston, economía, energía, distritos y emprendimiento.</p>
+        </button>
+
+        <button onclick="openCountyModal('MAR')" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+          <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">ARIZONA</span>
+          <h3 class="font-serif text-lg font-black text-navy">Maricopa</h3>
+          <div class="font-serif text-2xl font-black text-redAccent mt-2">32,3%</div>
+          <span class="text-[9px] uppercase font-bold text-mutedText">Población hispana</span>
+          <p class="text-[10px] text-mutedText mt-2">Phoenix, crecimiento, vivienda y política estatal.</p>
+        </button>
+
+        <button onclick="openCountyModal('CLK')" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+          <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">NEVADA</span>
+          <h3 class="font-serif text-lg font-black text-navy">Clark</h3>
+          <div class="font-serif text-2xl font-black text-redAccent mt-2">33,4%</div>
+          <span class="text-[9px] uppercase font-bold text-mutedText">Población hispana</span>
+          <p class="text-[10px] text-mutedText mt-2">Las Vegas, turismo, servicios, empleo y comunidad.</p>
+        </button>
+      </div>
+
+      <div class="bg-navy text-white p-4">
+        <span class="text-goldAccent text-[9px] font-black uppercase tracking-widest">Cómo crecer esta sección</span>
+        <p class="text-[11px] text-white/80 mt-1">
+          Siguiente expansión sugerida: Broward y Orange en Florida; Bexar en Texas; Los Angeles en California; Queens en Nueva York. En WordPress cada condado puede ser una taxonomía y alimentar su portada local automáticamente.
+        </p>
+      </div>
+
+      <div class="text-[9px] text-mutedText">Fuente demográfica: U.S. Census Bureau QuickFacts / Vintage 2025.</div>
+    </div>
+
+    <!-- VIEW: ECONOMÍA & NEGOCIOS -->
+    <div id="view-economia" class="view-panel hidden space-y-5">
+      
+      <div class="bg-navy text-white p-4 sm:p-5 shadow-sm border-l-4 border-redAccent">
+        <span class="text-goldAccent text-[10px] font-black uppercase tracking-widest">Análisis Financiero y Mercado</span>
+        <h2 class="font-serif text-2xl font-extrabold mt-0.5">Economía &amp; Negocios Hispanos</h2>
+        <p class="text-white/80 text-xs mt-1 max-w-2xl leading-relaxed">
+          Datos económicos que afectan el bolsillo, el crédito y las decisiones de las familias y negocios hispanos en 2026.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-white p-4 border border-navy/10 shadow-sm space-y-2">
+          <span class="text-redAccent text-xl font-black font-serif">01</span>
+          <h3 class="font-serif text-base font-bold text-navy">Poder Adquisitivo</h3>
+          <p class="text-xs text-mutedText leading-relaxed">
+            El IPC de Estados Unidos aumentó 3,4% interanual en julio de 2026. Energía subió 14,7% y alimentos 3,0% en doce meses.
+          </p>
+        </div>
+
+        <div class="bg-white p-4 border border-navy/10 shadow-sm space-y-2">
+          <span class="text-goldAccent text-xl font-black font-serif">02</span>
+          <h3 class="font-serif text-base font-bold text-navy">Reserva Federal</h3>
+          <p class="text-xs text-mutedText leading-relaxed">
+            La tasa objetivo de fondos federales permanece entre 3,50% y 3,75% tras la decisión del 29 de julio de 2026.
+          </p>
+        </div>
+
+        <div class="bg-white p-4 border border-navy/10 shadow-sm space-y-2">
+          <span class="text-navy text-xl font-black font-serif">03</span>
+          <h3 class="font-serif text-base font-bold text-navy">Lo que mira el votante</h3>
+          <p class="text-xs text-mutedText leading-relaxed">
+            Costo de vida, vivienda, empleo e inmigración siguen marcando la conversación de muchos votantes latinos rumbo a noviembre.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- VIEW: MUNDIAL 2026 + INTERACTIVE POLL -->
+    <div id="view-mundial" class="view-panel hidden space-y-5">
+      
+      <!-- Special Mundial Header -->
+      <div class="bg-navy text-white p-4 sm:p-6 shadow-md relative overflow-hidden">
+        <div class="relative z-10 space-y-1.5 max-w-2xl">
+          <span class="bg-redAccent text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5">
+            Cobertura Especial • Balance 2026
+          </span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-black italic tracking-tight">
+            España campeona: <span class="text-goldAccent">el legado del Mundial.</span>
+          </h2>
+          <p class="text-white/80 text-xs leading-relaxed">
+            España conquistó su segunda Copa del Mundo el 19 de julio en Nueva York/Nueva Jersey. Ahora seguimos el impacto que dejó el torneo en las comunidades anfitrionas.
+          </p>
+        </div>
+      </div>
+
+      <!-- Interactive World Cup Fan Poll & Live Chart -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 bg-white p-4 sm:p-5 border border-navy/10 shadow-sm">
+        
+        <!-- Poll Voting Controls -->
+        <div class="lg:col-span-5 space-y-3 border-b lg:border-b-0 lg:border-r border-navy/10 pb-4 lg:pb-0 lg:pr-5">
+          <div>
+            <span class="text-[10px] font-black uppercase tracking-widest text-redAccent">Encuesta Interactiva</span>
+            <h3 class="font-serif text-xl font-extrabold text-navy mt-0.5">¿Cuál será el mayor legado del Mundial en EE.UU.?</h3>
+            <p class="text-xs text-mutedText mt-0.5">
+              Vote y vea cómo se distribuyen las respuestas durante esta sesión.
+            </p>
+          </div>
+
+          <div class="space-y-1.5 pt-1" id="poll-options-list">
+            <button onclick="castVote('Fútbol juvenil')" class="w-full text-left bg-creamBg hover:bg-goldAccent/20 border border-navy/10 p-2 flex justify-between items-center text-xs font-bold text-navy transition-all">
+              <span>⚽ Fútbol juvenil</span>
+              <span class="text-redAccent">Votar →</span>
+            </button>
+            <button onclick="castVote('Turismo y ciudades sede')" class="w-full text-left bg-creamBg hover:bg-goldAccent/20 border border-navy/10 p-2 flex justify-between items-center text-xs font-bold text-navy transition-all">
+              <span>🏙️ Turismo y ciudades sede</span>
+              <span class="text-redAccent">Votar →</span>
+            </button>
+            <button onclick="castVote('Negocios locales')" class="w-full text-left bg-creamBg hover:bg-goldAccent/20 border border-navy/10 p-2 flex justify-between items-center text-xs font-bold text-navy transition-all">
+              <span>💼 Negocios locales</span>
+              <span class="text-redAccent">Votar →</span>
+            </button>
+            <button onclick="castVote('Infraestructura deportiva')" class="w-full text-left bg-creamBg hover:bg-goldAccent/20 border border-navy/10 p-2 flex justify-between items-center text-xs font-bold text-navy transition-all">
+              <span>🏟️ Infraestructura deportiva</span>
+              <span class="text-redAccent">Votar →</span>
+            </button>
+          </div>
+
+          <div id="poll-feedback" class="text-xs font-bold text-redAccent hidden">
+            ✓ ¡Gracias por tu voto! Gráfico actualizado.
+          </div>
+        </div>
+
+        <!-- Live Chart Display -->
+        <div class="lg:col-span-7 flex flex-col justify-between space-y-2">
+          <div>
+            <span class="text-[9px] font-black uppercase tracking-widest text-goldAccent">Encuesta de lectores</span>
+            <h4 class="font-serif text-base font-bold text-navy">Resultados de esta sesión</h4>
+          </div>
+          <div class="chart-container">
+            <canvas id="pollChart"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- VIEW: CULTURA & COMUNIDAD -->
+    <div id="view-cultura" class="view-panel hidden space-y-5">
+      <div class="bg-white p-4 border-l-4 border-redAccent shadow-sm space-y-1">
+        <span class="text-[10px] font-black uppercase tracking-widest text-redAccent">Cultura &amp; Comunidad</span>
+        <h2 class="font-serif text-2xl font-extrabold text-navy">La vida hispana en Estados Unidos</h2>
+        <p class="text-xs text-mutedText leading-relaxed">
+          Deportes, gastronomía, entretenimiento, identidad y tendencias que conectan a las comunidades hispanas de costa a costa.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <button onclick="showSection('mundial')" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+          <span class="text-redAccent text-[9px] font-black uppercase tracking-widest">Deportes &amp; Cultura</span>
+          <h3 class="font-serif text-base font-bold text-navy mt-1">El legado cultural del Mundial 2026</h3>
+          <p class="text-[11px] text-mutedText mt-1">España fue campeona y las ciudades sede ya entraron en la etapa de medir el impacto que dejó el torneo.</p>
+        </button>
+
+        <button onclick="showSection('condados')" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+          <span class="text-goldAccent text-[9px] font-black uppercase tracking-widest">Vida Local</span>
+          <h3 class="font-serif text-base font-bold text-navy mt-1">Historias desde nuestros condados</h3>
+          <p class="text-[11px] text-mutedText mt-1">Miami-Dade, Harris, Maricopa y Clark serán los primeros focos para cultura, negocios y comunidad.</p>
+        </button>
+
+        <div class="bg-navy text-white p-4 shadow-sm">
+          <span class="text-goldAccent text-[9px] font-black uppercase tracking-widest">Agenda Correo USA</span>
+          <h3 class="font-serif text-base font-bold mt-1">Qué debe vivir aquí</h3>
+          <p class="text-[11px] text-white/75 mt-1">Festivales, gastronomía, música, cine, perfiles, tendencias y recomendaciones locales con enfoque editorial.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW: VOCES & OPINIÓN -->
+    <div id="view-opinion" class="view-panel hidden space-y-5">
+      
+      <div class="bg-navy text-white p-4 sm:p-5 shadow-sm border-l-4 border-goldAccent">
+        <span class="text-goldAccent text-[10px] font-black uppercase tracking-widest">Perspectivas y Columnistas</span>
+        <h2 class="font-serif text-2xl font-extrabold mt-0.5">Voces de la Comunidad</h2>
+        <p class="text-white/80 text-xs mt-1 max-w-2xl leading-relaxed">
+          Reflexiones cualitativas de académicos, líderes empresariales y analistas sociopolíticos sobre el futuro hispano.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-white p-4 border border-navy/10 shadow-sm flex flex-col justify-between space-y-3">
+          <p class="font-serif italic text-sm text-navy leading-relaxed">
+            "Elecciones 2026: costo de vida, vivienda e inmigración concentran una parte importante de la conversación del votante latino."
+          </p>
+          <div class="border-t border-navy/10 pt-2">
+            <strong class="text-xs text-navy block font-bold">Editorial Correo USA</strong>
+            <span class="text-[9px] uppercase tracking-wider text-goldAccent font-extrabold block">Agenda Electoral</span>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 border border-navy/10 shadow-sm flex flex-col justify-between space-y-3">
+          <p class="font-serif italic text-sm text-navy leading-relaxed">
+            "La inflación se moderó en julio, mientras las tasas de interés siguen condicionando vivienda, consumo y financiamiento."
+          </p>
+          <div class="border-t border-navy/10 pt-2">
+            <strong class="text-xs text-navy block font-bold">Mesa de Economía</strong>
+            <span class="text-[9px] uppercase tracking-wider text-goldAccent font-extrabold block">Datos &amp; Bolsillo</span>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 border border-navy/10 shadow-sm flex flex-col justify-between space-y-3">
+          <p class="font-serif italic text-sm text-navy leading-relaxed">
+            "Después del Mundial, las ciudades sede miden el impacto sobre turismo, negocios locales y crecimiento del fútbol juvenil."
+          </p>
+          <div class="border-t border-navy/10 pt-2">
+            <strong class="text-xs text-navy block font-bold">Mesa de Comunidad</strong>
+            <span class="text-[9px] uppercase tracking-wider text-goldAccent font-extrabold block">Cultura &amp; Deportes</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- NEWSLETTER CTA SECTION (COMPACT) -->
+    <section class="bg-white border-t-2 border-redAccent p-5 md:p-6 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="space-y-1 text-center sm:text-left max-w-lg">
+        <h2 class="font-serif italic text-2xl font-extrabold text-navy leading-tight">
+          Recibe el resumen del Pulso Hispano
+        </h2>
+        <p class="text-xs text-mutedText leading-snug font-sans">
+          Cada mañana, los 5 puntos clave que definen nuestra jornada en Estados Unidos.
+        </p>
+      </div>
+
+      <form onsubmit="handleNewsletterSubmit(event)" class="flex w-full sm:w-auto max-w-sm">
+        <input type="email" id="newsletter-email" required="" placeholder="Tu correo electrónico" class="bg-creamBg/50 text-xs text-navy px-3 py-2 border border-navy/20 focus:outline-none w-full border-r-0 placeholder-navy/60">
+        <button type="submit" class="bg-navy hover:bg-redAccent text-white font-black text-[10px] uppercase tracking-widest px-5 py-2 transition-colors shrink-0">
+          SUSCRIBIRSE
+        </button>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- FOOTER (COMPACT LAYOUT) -->
+  <footer class="bg-navy text-white border-t-2 border-goldAccent mt-6 py-8">
+    <div class="max-w-5xl mx-auto px-3 space-y-6">
+      
+      <!-- Top Columns -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-xs">
+        
+        <!-- Brand & Description -->
+        <div class="space-y-2">
+          <img src="https://i.imgur.com/0un7YLr.png" alt="CORREO USA" class="h-7 w-auto object-contain">
+          <p class="text-white/70 leading-relaxed text-[11px] font-sans">
+            Información para decidir. Cobertura rigurosa de Estados Unidos con perspectiva hispana. Two languages, One America.
+          </p>
+
+          <!-- Square Social Icons -->
+          <div class="flex space-x-1.5 pt-1">
+            <a href="#" class="w-6 h-6 bg-navyLight border border-white/20 flex items-center justify-center text-white hover:bg-goldAccent hover:text-navy transition-colors font-black text-xs">f</a>
+            <a href="#" class="w-6 h-6 bg-navyLight border border-white/20 flex items-center justify-center text-white hover:bg-goldAccent hover:text-navy transition-colors font-black text-xs">↗</a>
+          </div>
+        </div>
+
+        <!-- Secciones -->
+        <div>
+          <h4 class="text-goldAccent font-black uppercase tracking-widest mb-2 text-[10px]">SECCIONES</h4>
+          <ul class="space-y-1 text-white/80 text-[11px]">
+            <li><a href="#" onclick="showSection('intelligence')" class="hover:text-goldAccent">Pulso Hispano</a></li>
+            <li><a href="#" onclick="showSection('estados')" class="hover:text-goldAccent">Estados Clave</a></li>
+            <li><a href="#" onclick="showSection('economia')" class="hover:text-goldAccent">Economía &amp; Negocios</a></li>
+            <li><a href="#" onclick="showSection('cultura')" class="hover:text-goldAccent">Cultura &amp; Estilo</a></li>
+            <li><a href="#" onclick="showSection('opinion')" class="hover:text-goldAccent">Opinión &amp; Análisis</a></li>
+          </ul>
+        </div>
+
+        <!-- Institucional -->
+        <div>
+          <h4 class="text-goldAccent font-black uppercase tracking-widest mb-2 text-[10px]">INSTITUCIONAL</h4>
+          <ul class="space-y-1 text-white/80 text-[11px]">
+            <li><a href="#" onclick="openModal('about')" class="hover:text-goldAccent">Sobre Nosotros</a></li>
+            <li><a href="#" onclick="openModal('ethics')" class="hover:text-goldAccent">Ética Editorial</a></li>
+            <li><a href="#" onclick="openModal('contact')" class="hover:text-goldAccent">Contacto</a></li>
+            <li><a href="#" onclick="openModal('privacy')" class="hover:text-goldAccent">Privacidad</a></li>
+          </ul>
+        </div>
+
+        <!-- Ediciones -->
+        <div>
+          <h4 class="text-goldAccent font-black uppercase tracking-widest mb-2 text-[10px]">EDICIONES</h4>
+          <ul class="space-y-1 text-white/80 text-[11px]">
+            <li><span class="hover:text-goldAccent cursor-pointer">Miami-Dade &amp; Broward</span></li>
+            <li><span class="hover:text-goldAccent cursor-pointer">Harris &amp; Bexar</span></li>
+            <li><span class="hover:text-goldAccent cursor-pointer">Maricopa &amp; Clark</span></li>
+            <li><span class="hover:text-goldAccent cursor-pointer">Los Ángeles &amp; Nueva York</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Center Mottos Box Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 border border-white/20 py-2 px-4 text-center text-goldAccent font-serif italic text-xs md:text-sm gap-2">
+        <div>Two languages, One America</div>
+        <div class="border-t md:border-t-0 md:border-x border-white/20 py-1 md:py-0">E Pluribus Unum</div>
+        <div>In God We Trust</div>
+      </div>
+
+      <!-- Bottom Sub-bar -->
+      <div class="pt-2 flex flex-col md:flex-row justify-between items-center text-[9px] text-white/50 font-bold uppercase tracking-widest gap-2">
+        <div>© 2026 CORREO USA. TODOS LOS DERECHOS RESERVADOS.</div>
+        <div class="flex space-x-4">
+          <a href="#" class="hover:text-white">ACCESSIBILITY</a>
+          <a href="#" class="hover:text-white">AD CHOICES</a>
+          <a href="#" class="hover:text-white">SITEMAP</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- MODAL CONTAINER -->
+  <div id="app-modal" class="fixed inset-0 bg-navy/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3">
+    <div class="bg-white max-w-xl w-full p-5 shadow-2xl border-t-4 border-redAccent relative max-h-[85vh] overflow-y-auto">
+      <button onclick="closeModal()" class="absolute top-3 right-3 text-navy font-black text-lg hover:text-redAccent">
+        ✕
+      </button>
+      <div id="modal-content" class="space-y-3">
+        <!-- Dynamic content injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <script>
+    /* ==========================================================================
+       DATA STORE & STATE MANAGEMENT
+       ========================================================================== */
+    const APP_DATA = {
+      states: [
+        {
+          code: 'FL',
+          name: 'Florida',
+          popShare: 29.2,
+          population: '23,46 M',
+          status: 'Primaria 18 Ago',
+          statusColor: 'bg-redAccent text-white',
+          description: 'Florida entra en la recta final de sus primarias del 18 de agosto, con especial atención sobre Miami-Dade y Florida Central.',
+          highlights: ['Población hispana: 29,2% según QuickFacts 2025.', 'La elección general será el 3 de noviembre de 2026.']
+        },
+        {
+          code: 'TX',
+          name: 'Texas',
+          popShare: 40.9,
+          population: '31,71 M',
+          status: 'Mapa 2026',
+          statusColor: 'bg-navy text-white',
+          description: 'Texas combina fuerte presencia hispana, carreras congresionales competitivas y un mapa político bajo seguimiento nacional.',
+          highlights: ['Población hispana: 40,9% según QuickFacts 2025.', 'Harris County registra 46,1% de población hispana.']
+        },
+        {
+          code: 'AZ',
+          name: 'Arizona',
+          popShare: 32.5,
+          population: '7,62 M',
+          status: 'Maricopa',
+          statusColor: 'bg-goldAccent text-navy',
+          description: 'Arizona llega a la elección general después de sus primarias de julio, con Maricopa como principal centro demográfico y electoral.',
+          highlights: ['Población hispana: 32,5% según QuickFacts 2025.', 'Maricopa County registra 32,3% de población hispana.']
+        },
+        {
+          code: 'NV',
+          name: 'Nevada',
+          popShare: 31.2,
+          population: '3,28 M',
+          status: 'Clark County',
+          statusColor: 'bg-redAccent text-white',
+          description: 'Nevada concentra buena parte de su población en Clark County, donde empleo, servicios y costo de vida marcan la conversación local.',
+          highlights: ['Población hispana: 31,2% según QuickFacts 2025.', 'Clark County registra 33,4% de población hispana.']
+        },
+        {
+          code: 'CA',
+          name: 'California',
+          popShare: 41.2,
+          population: '39,36 M',
+          status: 'Mayor población',
+          statusColor: 'bg-navy text-white',
+          description: 'California mantiene una de las mayores concentraciones absolutas y proporcionales de población hispana del país.',
+          highlights: ['Población hispana: 41,2% según QuickFacts 2025.', 'Los Angeles sigue siendo un mercado editorial prioritario.']
+        },
+        {
+          code: 'NY',
+          name: 'Nueva York',
+          popShare: 21.0,
+          population: '20,00 M',
+          status: 'Noreste',
+          statusColor: 'bg-goldAccent text-navy',
+          description: 'Nueva York combina una comunidad hispana diversa con alta presencia en medios, servicios, comercio y cultura.',
+          highlights: ['Población hispana: 21,0% según QuickFacts 2025.', 'Nueva York supera los 20 millones de habitantes en la estimación 2025.']
+        }
+      ],
+      counties: [
+        {
+          code: 'MIA',
+          name: 'Miami-Dade',
+          state: 'Florida',
+          popShare: 70.6,
+          focus: 'Elecciones, inmigración, vivienda, negocios y comunidad.',
+          source: 'U.S. Census Bureau QuickFacts / Vintage 2025'
+        },
+        {
+          code: 'HAR',
+          name: 'Harris',
+          state: 'Texas',
+          popShare: 46.1,
+          focus: 'Houston, economía, energía, distritos congresionales y emprendimiento.',
+          source: 'U.S. Census Bureau QuickFacts / Vintage 2025'
+        },
+        {
+          code: 'MAR',
+          name: 'Maricopa',
+          state: 'Arizona',
+          popShare: 32.3,
+          focus: 'Phoenix, crecimiento demográfico, vivienda y agenda electoral.',
+          source: 'U.S. Census Bureau QuickFacts / Vintage 2025'
+        },
+        {
+          code: 'CLK',
+          name: 'Clark',
+          state: 'Nevada',
+          popShare: 33.4,
+          focus: 'Las Vegas, turismo, servicios, empleo y comunidad.',
+          source: 'U.S. Census Bureau QuickFacts / Vintage 2025'
+        }
+      ],
+      pollVotes: {
+        'Fútbol juvenil': 0,
+        'Turismo y ciudades sede': 0,
+        'Negocios locales': 0,
+        'Infraestructura deportiva': 0
+      },
+      stories: {
+        'hero-1': {
+          title: 'Florida vota este martes: el pulso hispano entra al centro de las primarias 2026',
+          category: 'ELECCIONES 2026',
+          author: 'Redacción Correo USA',
+          content: 'Florida celebra sus primarias estatales el 18 de agosto de 2026. La cobertura de Correo USA seguirá especialmente a Miami-Dade y Florida Central para entender cómo se mueven las prioridades del electorado hispano rumbo a la elección general del 3 de noviembre.'
+        },
+        'hero-2': {
+          title: 'Inflación en 3,4%: qué significa para el bolsillo antes de las elecciones',
+          category: 'ECONOMÍA',
+          author: 'Redacción Economía',
+          image: 'https://i.imgur.com/IrKWYNr.jpeg',
+          imagePosition: 'center 12%',
+          imageAlt: 'Inflación y costo de vida en Estados Unidos',
+          content: 'El Índice de Precios al Consumidor aumentó 3,4% en los doce meses terminados en julio de 2026. La Reserva Federal mantuvo su rango objetivo de tasas entre 3,50% y 3,75% en su reunión del 29 de julio.'
+        },
+        'hot-1': {
+          title: 'Midterms 2026: 435 escaños de la Cámara estarán en juego',
+          category: 'ELECCIONES 2026',
+          author: 'Redacción Política',
+          content: 'La elección general federal será el 3 de noviembre de 2026. Todos los 435 escaños de la Cámara de Representantes estarán en juego, junto con 35 escaños del Senado previstos para este ciclo.'
+        },
+        'hot-2': {
+          title: 'Ciudadanía por nacimiento vuelve al centro de la batalla judicial',
+          category: 'INMIGRACIÓN',
+          author: 'Redacción Correo USA',
+          content: 'La disputa sobre ciudadanía por nacimiento continúa generando litigios federales en agosto de 2026. Correo USA seguirá las decisiones judiciales y sus efectos prácticos para las familias.'
+        },
+        'hot-3': {
+          title: 'España levanta su segunda Copa del Mundo',
+          category: 'MUNDIAL 2026',
+          author: 'Redacción Deportes',
+          content: 'España venció 1-0 a Argentina después de tiempo extra el 19 de julio de 2026 en Nueva York/Nueva Jersey y conquistó su segundo título mundial.'
+        }
+      }
+    };
+
+    let demographicsChartInstance = null;
+    let economicsChartInstance = null;
+    let pollChartInstance = null;
+    let isTickerPaused = false;
+
+    /* ==========================================================================
+       APPLICATION INITIALIZATION
+       ========================================================================== */
+    document.addEventListener('DOMContentLoaded', function() {
+      initDateDisplay();
+      initElectionCountdown();
+      renderIntelligenceCards('all');
+      renderStateTabs();
+      selectState('FL');
+      initCharts();
+    });
+
+    function initDateDisplay() {
+      const dateEl = document.getElementById('current-date-display');
+      if (dateEl) {
+        try {
+          const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+          const nowStr = new Date().toLocaleDateString('es-ES', options).toUpperCase();
+          dateEl.textContent = nowStr;
+        } catch(e) {
+          dateEl.textContent = "DOMINGO, 16 DE AGOSTO DE 2026";
+        }
+      }
+    }
+
+    function initElectionCountdown() {
+      const target = new Date('2026-11-03T00:00:00');
+      const now = new Date();
+      const diff = target.getTime() - now.getTime();
+      const days = Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+
+      const homeEl = document.getElementById('home-election-countdown');
+      const centerEl = document.getElementById('election-countdown');
+      if (homeEl) homeEl.textContent = days;
+      if (centerEl) centerEl.textContent = days;
+    }
+
+    /* ==========================================================================
+       NAVIGATION & VIEW SWITCHING
+       ========================================================================== */
+    function showSection(sectionId) {
+      const views = document.querySelectorAll('.view-panel');
+      views.forEach(v => v.classList.add('hidden'));
+
+      const selectedView = document.getElementById(`view-${sectionId}`);
+      if (selectedView) {
+        selectedView.classList.remove('hidden');
+      }
+
+      const tabs = document.querySelectorAll('.nav-tab');
+      tabs.forEach(t => {
+        t.classList.remove('text-goldAccent', 'border-goldAccent');
+        t.classList.add('text-white', 'border-transparent');
+      });
+
+      const activeBtn = document.getElementById(`nav-btn-${sectionId}`);
+      if (activeBtn) {
+        activeBtn.classList.add('text-goldAccent', 'border-goldAccent');
+        activeBtn.classList.remove('text-white', 'border-transparent');
+      }
+
+      window.dispatchEvent(new Event('resize'));
+    }
+
+    /* ==========================================================================
+       TICKER INTERACTIVITY
+       ========================================================================== */
+    function toggleTicker() {
+      const track = document.getElementById('ticker-track');
+      const btn = document.getElementById('ticker-toggle-btn');
+      if (isTickerPaused) {
+        track.style.animationPlayState = 'running';
+        btn.textContent = '⏸ Pausa';
+        isTickerPaused = false;
+      } else {
+        track.style.animationPlayState = 'paused';
+        btn.textContent = '▶ Reanudar';
+        isTickerPaused = true;
+      }
+    }
+
+    /* ==========================================================================
+       CHART.JS IMPLEMENTATIONS (CANVAS ONLY - NO SVG)
+       ========================================================================== */
+    function initCharts() {
+      // Chart 1: Demographics Horizontal Bar Chart
+      const ctxDemo = document.getElementById('demographicsChart').getContext('2d');
+      demographicsChartInstance = new Chart(ctxDemo, {
+        type: 'bar',
+        data: {
+          labels: APP_DATA.states.map(s => s.name),
+          datasets: [{
+            label: '% Población Hispana',
+            data: APP_DATA.states.map(s => s.popShare),
+            backgroundColor: '#0D1B3D',
+            borderColor: '#C49A22',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) { return ctx.raw + '% de la población del estado'; }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              max: 50,
+              ticks: { callback: function(value) { return value + '%'; }, font: { size: 9 } }
+            },
+            y: { ticks: { font: { size: 10 } } }
+          }
+        }
+      });
+
+      // Chart 2: County Hispanic Share
+      const ctxEcon = document.getElementById('economicsChart').getContext('2d');
+      economicsChartInstance = new Chart(ctxEcon, {
+        type: 'bar',
+        data: {
+          labels: APP_DATA.counties.map(c => c.name),
+          datasets: [{
+            label: '% Población Hispana',
+            data: APP_DATA.counties.map(c => c.popShare),
+            backgroundColor: ['#C8102E', '#0D1B3D', '#C49A22', '#162A5A']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) { return ctx.raw + '% de la población del condado'; }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 80,
+              ticks: { callback: function(value) { return value + '%'; }, font: { size: 9 } }
+            },
+            x: { ticks: { font: { size: 9 } } }
+          }
+        }
+      });
+
+      // Chart 3: World Cup Poll Bar Chart
+      const ctxPoll = document.getElementById('pollChart').getContext('2d');
+      pollChartInstance = new Chart(ctxPoll, {
+        type: 'bar',
+        data: {
+          labels: Object.keys(APP_DATA.pollVotes),
+          datasets: [{
+            label: 'Votos Registrados',
+            data: Object.values(APP_DATA.pollVotes),
+            backgroundColor: ['#C8102E', '#0D1B3D', '#C49A22', '#162A5A']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: { beginAtZero: true, ticks: { font: { size: 9 } } },
+            x: { ticks: { font: { size: 10 } } }
+          }
+        }
+      });
+    }
+
+    function updateIntelligenceCharts() {
+      const filter = document.getElementById('chart-state-filter').value;
+      let filteredStates = APP_DATA.states;
+
+      if (filter === 'border') {
+        filteredStates = APP_DATA.states.filter(s => ['TX', 'AZ', 'CA'].includes(s.code));
+      } else if (filter === 'swing') {
+        filteredStates = APP_DATA.states.filter(s => ['FL', 'NV', 'AZ'].includes(s.code));
+      }
+
+      if (demographicsChartInstance) {
+        demographicsChartInstance.data.labels = filteredStates.map(s => s.name);
+        demographicsChartInstance.data.datasets[0].data = filteredStates.map(s => s.popShare);
+        demographicsChartInstance.update();
+      }
+
+      renderIntelligenceCards(filter);
+    }
+
+    /* ==========================================================================
+       DYNAMIC RENDERERS
+       ========================================================================== */
+    function renderIntelligenceCards(filter) {
+      const container = document.getElementById('intelligence-cards-container');
+      if (!container) return;
+
+      let filtered = APP_DATA.states;
+      if (filter === 'border') {
+        filtered = APP_DATA.states.filter(s => ['TX', 'AZ', 'CA'].includes(s.code));
+      } else if (filter === 'swing') {
+        filtered = APP_DATA.states.filter(s => ['FL', 'NV', 'AZ'].includes(s.code));
+      }
+
+      container.innerHTML = filtered.map(s => `
+        <div class="bg-creamBg p-3 border border-navy/10 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-serif font-black text-base text-navy">${s.name} (${s.code})</span>
+              <span class="${s.statusColor} text-[8px] font-black uppercase px-1.5 py-0.5">${s.status}</span>
+            </div>
+            <div class="text-[9px] font-bold text-goldAccent uppercase tracking-wider mb-0.5">Población Hispana • Census 2025</div>
+            <div class="text-xl font-black text-navy mb-1">${s.popShare}%</div>
+            <p class="text-[11px] text-mutedText leading-tight">${s.description}</p>
+          </div>
+          <button onclick="selectState('${s.code}'); showSection('estados');" class="mt-2 text-[9px] font-extrabold text-redAccent uppercase tracking-widest hover:underline text-left">
+            Ver Ficha →
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function renderStateTabs() {
+      const container = document.getElementById('state-tabs-list');
+      if (!container) return;
+
+      container.innerHTML = APP_DATA.states.map(s => `
+        <button onclick="selectState('${s.code}')" id="state-tab-${s.code}" 
+                class="state-tab-btn px-3 py-1 text-[11px] font-bold uppercase border border-navy/20 bg-creamBg text-navy transition-all">
+          ${s.name}
+        </button>
+      `).join('');
+    }
+
+    function selectState(code) {
+      const state = APP_DATA.states.find(s => s.code === code);
+      if (!state) return;
+
+      document.querySelectorAll('.state-tab-btn').forEach(btn => {
+        btn.classList.remove('bg-navy', 'text-white', 'border-navy');
+        btn.classList.add('bg-creamBg', 'text-navy', 'border-navy/20');
+      });
+      const activeTab = document.getElementById(`state-tab-${code}`);
+      if (activeTab) {
+        activeTab.classList.add('bg-navy', 'text-white', 'border-navy');
+        activeTab.classList.remove('bg-creamBg', 'text-navy');
+      }
+
+      const card = document.getElementById('state-detail-card');
+      if (card) {
+        const barWidth = Math.min(100, state.popShare * 2);
+        card.innerHTML = `
+          <div class="lg:col-span-5 space-y-3 border-b lg:border-b-0 lg:border-r border-navy/10 pb-4 lg:pb-0 lg:pr-4">
+            <div class="flex items-center space-x-2">
+              <span class="font-serif font-black text-2xl text-navy">${state.name}</span>
+              <span class="${state.statusColor} text-[9px] font-black uppercase px-1.5 py-0.5">${state.status}</span>
+            </div>
+            <p class="text-xs text-mutedText leading-relaxed">${state.description}</p>
+
+            <div class="grid grid-cols-2 gap-2 pt-1">
+              <div class="bg-creamBg p-2 border border-navy/10">
+                <span class="text-[8px] font-black text-goldAccent uppercase tracking-wider block">Población Hispana</span>
+                <span class="text-lg font-black text-navy">${state.popShare}%</span>
+              </div>
+              <div class="bg-creamBg p-2 border border-navy/10">
+                <span class="text-[8px] font-black text-redAccent uppercase tracking-wider block">Población 2025</span>
+                <span class="text-lg font-black text-navy">${state.population}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 space-y-3 flex flex-col justify-between">
+            <div>
+              <h4 class="text-[10px] font-black uppercase tracking-widest text-navy mb-2 border-b border-navy/10 pb-1">
+                Aspectos Clave del Estado
+              </h4>
+              <ul class="space-y-1.5">
+                ${state.highlights.map(h => `
+                  <li class="flex items-start space-x-1.5 text-xs text-navy font-medium">
+                    <span class="text-redAccent font-bold">•</span>
+                    <span>${h}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+
+            <div class="bg-navy p-3 text-white space-y-1.5">
+              <span class="text-goldAccent text-[8px] font-black uppercase tracking-widest block">Peso Demográfico Hispano</span>
+              <div class="flex items-center justify-between text-xs font-bold">
+                <span>Proporción sobre la población estatal</span>
+                <span class="text-goldAccent">${state.popShare}%</span>
+              </div>
+              <div class="w-full bg-white/20 h-1.5 rounded-none overflow-hidden">
+                <div class="bg-goldAccent h-full" style="width: ${barWidth}%"></div>
+              </div>
+              <div class="text-[8px] text-white/60">Fuente: U.S. Census Bureau QuickFacts / Vintage 2025.</div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    /* ==========================================================================
+       INTERACTIVE POLL CONTROLLER
+       ========================================================================== */
+    function castVote(team) {
+      if (APP_DATA.pollVotes[team] !== undefined) {
+        APP_DATA.pollVotes[team] += 1;
+        
+        if (pollChartInstance) {
+          pollChartInstance.data.datasets[0].data = Object.values(APP_DATA.pollVotes);
+          pollChartInstance.update();
+        }
+
+        const feedback = document.getElementById('poll-feedback');
+        if (feedback) {
+          feedback.classList.remove('hidden');
+          setTimeout(() => feedback.classList.add('hidden'), 4000);
+        }
+      }
+    }
+
+    /* ==========================================================================
+       SEARCH CONTROLLER
+       ========================================================================== */
+    function handleSearch() {
+      const query = document.getElementById('global-search').value.toLowerCase().trim();
+      if (query.length < 2) return;
+
+      const matchedState = APP_DATA.states.find(s => s.name.toLowerCase().includes(query) || s.code.toLowerCase().includes(query));
+      if (matchedState) {
+        showSection('estados');
+        selectState(matchedState.code);
+        return;
+      }
+
+      const matchedCounty = APP_DATA.counties.find(c =>
+        c.name.toLowerCase().includes(query) ||
+        c.state.toLowerCase().includes(query) ||
+        c.code.toLowerCase().includes(query)
+      );
+      if (matchedCounty) {
+        showSection('condados');
+        openCountyModal(matchedCounty.code);
+      }
+    }
+
+    function openCountyModal(code) {
+      const county = APP_DATA.counties.find(c => c.code === code);
+      if (!county) return;
+
+      const content = document.getElementById('modal-content');
+      content.innerHTML = `
+        <span class="text-redAccent text-[9px] font-black uppercase tracking-widest block">CONDADOS • ${county.state}</span>
+        <h2 class="font-serif text-xl font-extrabold text-navy leading-tight">${county.name} County</h2>
+        <div class="grid grid-cols-2 gap-2 py-2">
+          <div class="bg-creamBg p-3 border border-navy/10">
+            <span class="text-[8px] font-black uppercase tracking-wider text-goldAccent block">Población Hispana</span>
+            <span class="font-serif text-2xl font-black text-navy">${county.popShare}%</span>
+          </div>
+          <div class="bg-creamBg p-3 border border-navy/10">
+            <span class="text-[8px] font-black uppercase tracking-wider text-goldAccent block">Edición</span>
+            <span class="text-sm font-black text-navy">${county.state}</span>
+          </div>
+        </div>
+        <p class="text-xs text-inkText/90 leading-relaxed">${county.focus}</p>
+        <div class="text-[9px] text-mutedText border-t border-navy/10 pt-2">${county.source}</div>
+      `;
+      document.getElementById('app-modal').classList.remove('hidden');
+    }
+
+    /* ==========================================================================
+       MODAL CONTROLLER
+       ========================================================================== */
+    function openStoryModal(storyId) {
+      const story = APP_DATA.stories[storyId];
+      if (!story) return;
+
+      const content = document.getElementById('modal-content');
+      content.innerHTML = `
+        <span class="text-redAccent text-[9px] font-black uppercase tracking-widest block">${story.category}</span>
+        <h2 class="font-serif text-xl font-extrabold text-navy leading-tight">${story.title}</h2>
+        <div class="text-[10px] font-bold text-mutedText border-b border-navy/10 pb-1.5">Por ${story.author} • Correo USA</div>
+        ${story.image ? `<div class="overflow-hidden bg-navy mt-2 flex items-center justify-center"><img src="${story.image}" alt="${story.imageAlt || story.title}" class="w-full max-h-80 editorial-article-full" style="object-position: ${story.imagePosition || 'center'};"></div>` : ''}
+        <p class="text-xs text-inkText/90 leading-relaxed pt-1">${story.content}</p>
+        <div class="pt-3 flex justify-end">
+          <button onclick="closeModal()" class="bg-navy text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 hover:bg-redAccent transition-colors">
+            Cerrar Lectura
+          </button>
+        </div>
+      `;
+
+      document.getElementById('app-modal').classList.remove('hidden');
+    }
+
+    function openModal(type) {
+      const content = document.getElementById('modal-content');
+      if (type === 'subscribe') {
+        content.innerHTML = `
+          <h2 class="font-serif text-xl font-extrabold text-navy">Suscripción Exclusiva Correo USA</h2>
+          <p class="text-xs text-mutedText">Acceda a análisis de datos descargables y resúmenes diarios.</p>
+          <form onsubmit="handleNewsletterSubmit(event)" class="space-y-2 pt-1">
+            <input type="email" required placeholder="Ingresa tu correo electrónico" class="w-full bg-creamBg text-xs p-2.5 border border-navy/20 focus:outline-none">
+            <button type="submit" class="w-full bg-redAccent text-white text-xs font-bold uppercase tracking-widest py-2.5 hover:bg-navy transition-colors">
+              Confirmar Suscripción
+            </button>
+          </form>
+        `;
+      } else if (type === 'login') {
+        content.innerHTML = `
+          <h2 class="font-serif text-xl font-extrabold text-navy">Iniciar Sesión</h2>
+          <p class="text-xs text-mutedText">Ingresa a tu cuenta de suscriptor de CORREO USA.</p>
+          <form onsubmit="event.preventDefault(); alert('Sesión iniciada con éxito.'); closeModal();" class="space-y-2 pt-1">
+            <input type="email" required placeholder="Correo electrónico" class="w-full bg-creamBg text-xs p-2.5 border border-navy/20 focus:outline-none">
+            <input type="password" required placeholder="Contraseña" class="w-full bg-creamBg text-xs p-2.5 border border-navy/20 focus:outline-none">
+            <button type="submit" class="w-full bg-navy text-white text-xs font-bold uppercase tracking-widest py-2.5 hover:bg-redAccent transition-colors">
+              Entrar
+            </button>
+          </form>
+        `;
+      } else {
+        content.innerHTML = `
+          <h2 class="font-serif text-xl font-extrabold text-navy">Información Institucional</h2>
+          <p class="text-xs text-mutedText">CORREO USA es una publicación comprometida con la independencia editorial para la comunidad hispana de EE.UU.</p>
+        `;
+      }
+
+      document.getElementById('app-modal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('app-modal').classList.add('hidden');
+    }
+
+    function handleNewsletterSubmit(e) {
+      e.preventDefault();
+      alert('¡Gracias por suscribirte a CORREO USA!');
+      closeModal();
+    }
+
+    function switchEdition(lang) {
+      if (lang === 'ENG') {
+        alert('Switched to English edition preview.');
+      } else {
+        alert('Edición en Español activa.');
+      }
+    }
+  </script>
+  </body>
+</html>
