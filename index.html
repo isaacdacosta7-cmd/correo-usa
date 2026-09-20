@@ -75,6 +75,16 @@
     .animate-ticker:hover {
       animation-play-state: paused;
     }
+    .ticker-copy {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding-right: 1rem;
+      flex-shrink: 0;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .animate-ticker { animation: none; }
+    }
 
     /* Scrollbar hide helpers */
     .no-scrollbar::-webkit-scrollbar {
@@ -136,20 +146,25 @@
   <div class="bg-redAccent text-white text-[10px] font-extrabold uppercase tracking-wider overflow-hidden border-b border-navy/20 relative z-50">
     <div class="max-w-5xl mx-auto flex items-center justify-between px-3 py-1">
       <div class="flex items-center space-x-1.5 shrink-0 mr-3 bg-navy px-1.5 py-0.5 rounded text-[9px] tracking-wider">
-        <span>ÚLTIMA HORA</span>
+        <span>AL DÍA · 20 SEP</span>
         <button id="ticker-toggle-btn" onclick="toggleTicker()" class="text-goldAccent hover:underline focus:outline-none ml-1">⏸ Pausa</button>
       </div>
       <div class="overflow-hidden w-full relative">
-        <div id="ticker-track" class="animate-ticker space-x-4 whitespace-nowrap text-[10px] font-bold">
-          <span>ELECCIONES 2026: FLORIDA VOTA EN PRIMARIAS ESTE MARTES 18 DE AGOSTO</span>
+        <div id="ticker-track" class="animate-ticker whitespace-nowrap text-[10px] font-bold">
+          <div class="ticker-copy">
+          <span>ELECCIONES 2026: <span data-election-ticker>RUMBO AL 3 DE NOVIEMBRE</span></span>
           <span class="text-navy font-black">■</span>
-          <span>ECONOMÍA: LA INFLACIÓN ANUAL DE JULIO SE UBICÓ EN 3,4%</span>
+          <button onclick="openStoryModal('hero-2')" class="hover:underline">MARQUETTE: DEMÓCRATAS 54%, REPUBLICANOS 41% ENTRE VOTANTES PROBABLES · SONDEO, 16 SEP</button>
           <span class="text-navy font-black">■</span>
-          <span>FED: LA TASA DE REFERENCIA SE MANTIENE ENTRE 3,50% Y 3,75%</span>
+          <button onclick="openStoryModal('hot-1')" class="hover:underline">FED: SUBE LA TASA AL RANGO 3,75%–4,00% · 16 SEP</button>
           <span class="text-navy font-black">■</span>
-          <span>MUNDIAL 2026: ESPAÑA ES CAMPEONA TRAS VENCER 1-0 A ARGENTINA EN LA FINAL</span>
+          <button onclick="openStoryModal('hot-2')" class="hover:underline">IPC DE AGOSTO: 3,4% INTERANUAL · BLS, 11 SEP</button>
           <span class="text-navy font-black">■</span>
-          <span>ELECCIONES 2026: FLORIDA VOTA EN PRIMARIAS ESTE MARTES 18 DE AGOSTO</span>
+          <button onclick="openStoryModal('florida-agenda')" class="hover:underline">FLORIDA: ENVÍO NACIONAL DE BOLETAS DEL 24 SEP AL 1 OCT</button>
+          <span class="text-navy font-black">■</span>
+          <button onclick="openStoryModal('hot-3')" class="hover:underline">MES DE LA HERENCIA HISPANA: AGENDA CULTURAL HASTA EL 15 OCT</button>
+          <span class="text-navy font-black">■</span>
+          </div>
         </div>
       </div>
     </div>
@@ -163,7 +178,7 @@
     <!-- Top Utility Bar -->
     <div class="bg-navy border-b border-white/10">
       <div class="max-w-5xl mx-auto px-3 py-1 flex flex-row justify-between items-center text-[10px] font-bold tracking-wider uppercase">
-        <div id="current-date-display" class="text-white/80 font-sans">DOMINGO, 16 DE AGOSTO DE 2026</div>
+        <div id="current-date-display" class="text-white/80 font-sans">DOMINGO, 20 DE SEPTIEMBRE DE 2026</div>
         <div class="font-serif italic text-white/90 text-[11px] tracking-normal font-normal hidden sm:block">
           "Información para decidir"
         </div>
@@ -293,13 +308,13 @@
           <article class="group cursor-pointer border-b border-navy/10 pb-3" onclick="openStoryModal('hero-2')">
             <div class="overflow-hidden bg-navy mb-1.5 h-24 sm:h-28 w-full">
               <!-- Shipping Port Photo -->
-              <img src="https://i.imgur.com/IrKWYNr.jpeg" alt="Inflación y costo de vida en Estados Unidos" class="w-full h-full editorial-face-safe-secondary transition-transform duration-500">
+              <img src="https://i.imgur.com/IrKWYNr.jpeg" alt="Donald Trump, fotografía de archivo" class="w-full h-full editorial-face-safe-secondary transition-transform duration-500">
             </div>
             <h2 class="font-serif text-sm font-extrabold text-navy group-hover:text-redAccent transition-colors mb-0.5 leading-tight">
-              Inflación en 3,4%: qué significa para el bolsillo antes de las elecciones
+              Marquette: demócratas amplían ventaja en el sondeo nacional al Congreso
             </h2>
             <p class="text-mutedText text-[10px] leading-snug line-clamp-2">
-              Los precios moderaron su avance en julio mientras la Reserva Federal mantiene la tasa entre 3,50% y 3,75%.
+              Encuesta publicada el 16 de septiembre. Consulta los datos y su alcance rumbo a noviembre.
             </p>
           </article>
 
@@ -311,15 +326,15 @@
             <ul class="space-y-1.5 text-[11px] font-bold text-navy">
               <li class="flex items-start space-x-2 cursor-pointer hover:text-redAccent" onclick="openStoryModal('hot-1')">
                 <span class="font-serif text-sm font-black text-goldAccent">01</span>
-                <span class="leading-tight">Midterms 2026: 435 escaños de la Cámara estarán en juego.</span>
+                <span class="leading-tight">La Fed eleva las tasas: decisión del 16 de septiembre.</span>
               </li>
               <li class="flex items-start space-x-2 cursor-pointer hover:text-redAccent" onclick="openStoryModal('hot-2')">
                 <span class="font-serif text-sm font-black text-goldAccent">02</span>
-                <span class="leading-tight">Inmigración: la ciudadanía por nacimiento vuelve al centro de la batalla judicial.</span>
+                <span class="leading-tight">IPC de agosto: el nuevo informe para seguir el costo de vida.</span>
               </li>
               <li class="flex items-start space-x-2 cursor-pointer hover:text-redAccent" onclick="openStoryModal('hot-3')">
                 <span class="font-serif text-sm font-black text-goldAccent">03</span>
-                <span class="leading-tight">Mundial 2026: España levanta su segunda Copa del Mundo.</span>
+                <span class="leading-tight">Herencia Hispana: cultura, historia y recursos para las familias.</span>
               </li>
             </ul>
           </div>
@@ -331,7 +346,7 @@
       <section aria-labelledby="latest-news-title" class="space-y-3">
         <div class="border-b border-navy/20 pb-2 flex flex-wrap items-end justify-between gap-2">
           <h2 id="latest-news-title" class="font-serif text-xl font-extrabold text-navy">Últimas noticias</h2>
-          <span class="text-[10px] font-bold text-mutedText">Edición del 19 de septiembre de 2026</span>
+          <span class="text-[10px] font-bold text-mutedText">Noticias de Correo USA · 19/09/2026</span>
         </div>
         <div id="latest-news-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
       </section>
@@ -363,7 +378,7 @@
           </div>
         </div>
         <div class="mt-3 pt-2 border-t border-navy/10 flex flex-col sm:flex-row justify-between gap-2 items-start sm:items-center">
-          <span class="text-[10px] font-bold text-navy">Florida: primarias estatales el martes 18 de agosto de 2026.</span>
+          <button onclick="openStoryModal('florida-agenda')" class="text-[10px] font-bold text-navy hover:underline">Florida: inscripción electoral hasta el 5 de octubre. Ver calendario y fuente →</button>
           <button onclick="showSection('elecciones')" class="text-[10px] font-extrabold text-redAccent hover:underline uppercase tracking-wider">
             Abrir Centro Electoral →
           </button>
@@ -402,9 +417,9 @@
           <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="showSection('estados'); selectState('FL')">
             <div class="flex justify-between items-center mb-1.5">
               <span class="font-serif text-lg font-black text-navy">Florida</span>
-              <span class="bg-redAccent text-white text-[8px] font-black px-1.5 py-0.5 uppercase tracking-widest">Primaria 18 Ago</span>
+              <span class="bg-redAccent text-white text-[8px] font-black px-1.5 py-0.5 uppercase tracking-widest">Rumbo al 3 Nov</span>
             </div>
-            <p class="text-[11px] text-mutedText mb-2 leading-tight">Miami-Dade y Florida Central concentran atención rumbo a las primarias y las midterms.</p>
+            <p class="text-[11px] text-mutedText mb-2 leading-tight">Miami-Dade, voto por correo y preparación de la elección general de noviembre.</p>
             <div class="text-[10px] font-extrabold text-navy">Población hispana: <span class="text-redAccent">29,2%</span></div>
           </div>
 
@@ -563,7 +578,7 @@
         <span class="text-goldAccent text-[10px] font-black uppercase tracking-widest">Centro Electoral Correo USA</span>
         <h2 class="font-serif text-2xl font-extrabold mt-0.5">Elecciones USA 2026</h2>
         <p class="text-white/80 text-xs mt-1 max-w-2xl leading-relaxed">
-          Guía editorial para seguir las primarias, las carreras al Congreso y los temas que movilizan al electorado hispano rumbo al 3 de noviembre.
+          Calendario, encuestas y contexto para seguir las carreras al Congreso rumbo al 3 de noviembre. Actualización editorial: 20/09/2026.
         </p>
       </div>
 
@@ -589,9 +604,9 @@
         <div class="flex flex-col md:flex-row justify-between gap-3">
           <div>
             <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">Lo inmediato</span>
-            <h3 class="font-serif text-lg font-extrabold text-navy">Florida celebra sus primarias el 18 de agosto</h3>
+            <h3 class="font-serif text-lg font-extrabold text-navy">Florida prepara el envío de boletas por correo</h3>
             <p class="text-[11px] text-mutedText mt-1 max-w-2xl">
-              El período obligatorio de votación anticipada terminó el 15 de agosto. La elección primaria estatal se celebra este martes.
+              El envío a electores dentro del país está previsto entre el 24 de septiembre y el 1 de octubre. <button onclick="openStoryModal('florida-agenda')" class="text-redAccent font-bold underline">Consultar fechas y fuente oficial →</button>
             </p>
           </div>
           <div class="bg-creamBg border border-navy/10 p-3 shrink-0 min-w-[160px] text-center">
@@ -605,34 +620,34 @@
       <div class="space-y-3">
         <div class="border-b border-navy/20 pb-1.5">
           <span class="text-[10px] font-black uppercase tracking-widest text-goldAccent">Radar Hispano 2026</span>
-          <h3 class="font-serif text-xl font-extrabold text-navy">Cuatro territorios para seguir</h3>
+          <h3 class="font-serif text-xl font-extrabold text-navy">Radar electoral: encuestas y comunidad</h3>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <button onclick="selectState('FL'); showSection('estados');" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
-            <span class="text-[9px] font-black text-redAccent uppercase tracking-widest">Florida</span>
-            <h4 class="font-serif font-bold text-navy">Primarias, Miami-Dade y voto hispano</h4>
-            <p class="text-[10px] text-mutedText mt-1">El sur de Florida vuelve a ser un laboratorio para medir cambios dentro de un electorado latino diverso.</p>
+          <button onclick="openStoryModal('hero-2')" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+            <span class="text-[9px] font-black text-redAccent uppercase tracking-widest">Sondeo nacional · 16 SEP</span>
+            <h4 class="font-serif font-bold text-navy">Marquette: 54% demócrata, 41% republicano</h4>
+            <p class="text-[10px] text-mutedText mt-1">Entre votantes probables. Una encuesta nacional no determina cuántos escaños ganará cada partido. Ver metodología →</p>
           </button>
-          <button onclick="selectState('TX'); showSection('estados');" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+          <button onclick="openStoryModal('hidalgo-20260919')" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
             <span class="text-[9px] font-black text-redAccent uppercase tracking-widest">Texas</span>
-            <h4 class="font-serif font-bold text-navy">Distritos, rediseño electoral y bolsillo</h4>
-            <p class="text-[10px] text-mutedText mt-1">Las carreras congresionales y el costo de vida concentran atención en áreas con fuerte presencia latina.</p>
+            <h4 class="font-serif font-bold text-navy">Hidalgo se prepara para votar</h4>
+            <p class="text-[10px] text-mutedText mt-1">La frontera y el voto hispano, en la cobertura de Correo USA del 19 de septiembre.</p>
           </button>
-          <button onclick="selectState('AZ'); showSection('estados');" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
-            <span class="text-[9px] font-black text-redAccent uppercase tracking-widest">Arizona</span>
-            <h4 class="font-serif font-bold text-navy">Maricopa y participación electoral</h4>
-            <p class="text-[10px] text-mutedText mt-1">El condado más poblado del estado sigue siendo una pieza central del seguimiento electoral.</p>
+          <button onclick="openStoryModal('gwinnett-20260919')" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+            <span class="text-[9px] font-black text-redAccent uppercase tracking-widest">Georgia</span>
+            <h4 class="font-serif font-bold text-navy">Gwinnett y la disputa por el Senado</h4>
+            <p class="text-[10px] text-mutedText mt-1">Ossoff y Collins: lee la noticia de Correo USA sobre esta carrera electoral.</p>
           </button>
-          <button onclick="selectState('NV'); showSection('estados');" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
-            <span class="text-[9px] font-black text-redAccent uppercase tracking-widest">Nevada</span>
-            <h4 class="font-serif font-bold text-navy">Clark County, empleo y servicios</h4>
-            <p class="text-[10px] text-mutedText mt-1">La economía de servicios y la concentración poblacional de Las Vegas marcan la cobertura local.</p>
+          <button onclick="openStoryModal('registro-electoral')" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+            <span class="text-[9px] font-black text-redAccent uppercase tracking-widest">Servicio al lector · 20 SEP</span>
+            <h4 class="font-serif font-bold text-navy">Revisa tu inscripción antes de noviembre</h4>
+            <p class="text-[10px] text-mutedText mt-1">Accede a las autoridades de tu estado para comprobar requisitos, plazos y registro electoral.</p>
           </button>
         </div>
       </div>
 
       <div class="text-[9px] text-mutedText border-t border-navy/10 pt-2">
-        Fechas y estructura electoral: FEC, USA.gov y autoridades electorales estatales. La cobertura editorial debe actualizarse conforme se publiquen resultados oficiales.
+        Fuentes: <a href="https://www.fec.gov/resources/cms-content/documents/2026pdates.pdf" target="_blank" rel="noopener noreferrer" class="underline">calendario FEC 2026</a> · <a href="https://dos.fl.gov/elections/for-voters/election-dates/" target="_blank" rel="noopener noreferrer" class="underline">Florida Elections</a> · <a href="https://law.marquette.edu/poll/2026/09/16/mlspsc35-1/" target="_blank" rel="noopener noreferrer" class="underline">Marquette, 16/09/2026</a>. Los sondeos son mediciones con incertidumbre; no son resultados ni proyecciones de escaños. Contador por fecha del Este de EE.UU.
       </div>
     </div>
 
@@ -667,7 +682,7 @@
         <span class="text-[10px] font-black uppercase tracking-widest text-goldAccent">Ediciones Locales</span>
         <h2 class="font-serif text-2xl font-extrabold text-navy">Condados en el Radar</h2>
         <p class="text-xs text-mutedText leading-relaxed">
-          Primera red local de Correo USA para organizar noticias por territorio. Cada ficha puede convertirse después en una página automática de WordPress.
+          Contexto demográfico y temas de cobertura local para seguir a las comunidades hispanas. Datos poblacionales de referencia: 2025; agenda editorial: septiembre de 2026.
         </p>
       </div>
 
@@ -706,9 +721,9 @@
       </div>
 
       <div class="bg-navy text-white p-4">
-        <span class="text-goldAccent text-[9px] font-black uppercase tracking-widest">Cómo crecer esta sección</span>
+        <span class="text-goldAccent text-[9px] font-black uppercase tracking-widest">Servicio electoral · septiembre de 2026</span>
         <p class="text-[11px] text-white/80 mt-1">
-          Siguiente expansión sugerida: Broward y Orange en Florida; Bexar en Texas; Los Angeles en California; Queens en Nueva York. En WordPress cada condado puede ser una taxonomía y alimentar su portada local automáticamente.
+          Antes de noviembre, revisa tu inscripción y los plazos aplicables a tu domicilio. <a href="https://www.usa.gov/register-to-vote" target="_blank" rel="noopener noreferrer" class="text-goldAccent underline">USA.gov reúne las vías oficiales de registro por estado →</a>
         </p>
       </div>
 
@@ -729,26 +744,29 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="bg-white p-4 border border-navy/10 shadow-sm space-y-2">
           <span class="text-redAccent text-xl font-black font-serif">01</span>
-          <h3 class="font-serif text-base font-bold text-navy">Poder Adquisitivo</h3>
+          <h3 class="font-serif text-base font-bold text-navy">IPC de agosto: 3,4% anual</h3>
           <p class="text-xs text-mutedText leading-relaxed">
-            El IPC de Estados Unidos aumentó 3,4% interanual en julio de 2026. Energía subió 14,7% y alimentos 3,0% en doce meses.
+            Los precios aumentaron 0,4% mensual. La inflación subyacente fue 2,4% interanual, según el informe del 11 de septiembre.
           </p>
+          <button onclick="openStoryModal('hot-2')" class="text-[10px] text-redAccent font-bold underline">Por Correo USA · Fuente: BLS →</button>
         </div>
 
         <div class="bg-white p-4 border border-navy/10 shadow-sm space-y-2">
           <span class="text-goldAccent text-xl font-black font-serif">02</span>
           <h3 class="font-serif text-base font-bold text-navy">Reserva Federal</h3>
           <p class="text-xs text-mutedText leading-relaxed">
-            La tasa objetivo de fondos federales permanece entre 3,50% y 3,75% tras la decisión del 29 de julio de 2026.
+            El 16 de septiembre, la Fed elevó un cuarto de punto su rango objetivo, hasta 3,75%–4,00%.
           </p>
+          <button onclick="openStoryModal('hot-1')" class="text-[10px] text-redAccent font-bold underline">Por Correo USA · Fuente: Reserva Federal →</button>
         </div>
 
         <div class="bg-white p-4 border border-navy/10 shadow-sm space-y-2">
           <span class="text-navy text-xl font-black font-serif">03</span>
-          <h3 class="font-serif text-base font-bold text-navy">Lo que mira el votante</h3>
+          <h3 class="font-serif text-base font-bold text-navy">Próximo dato: 14 de octubre</h3>
           <p class="text-xs text-mutedText leading-relaxed">
-            Costo de vida, vivienda, empleo e inmigración siguen marcando la conversación de muchos votantes latinos rumbo a noviembre.
+            El BLS tiene previsto publicar el IPC de septiembre a las 8:30 a. m., hora del Este. La agenda permite seguir el bolsillo antes de votar.
           </p>
+          <a href="https://www.bls.gov/schedule/news_release/cpi.htm" target="_blank" rel="noopener noreferrer" class="text-[10px] text-redAccent font-bold underline">Calendario oficial del BLS →</a>
         </div>
       </div>
 
@@ -761,14 +779,15 @@
       <div class="bg-navy text-white p-4 sm:p-6 shadow-md relative overflow-hidden">
         <div class="relative z-10 space-y-1.5 max-w-2xl">
           <span class="bg-redAccent text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5">
-            Cobertura Especial • Balance 2026
+            Cobertura Especial • Actualizado 20 SEP 2026
           </span>
           <h2 class="font-serif text-2xl sm:text-3xl font-black italic tracking-tight">
-            España campeona: <span class="text-goldAccent">el legado del Mundial.</span>
+            Después del Mundial: <span class="text-goldAccent">la FIFA bajo escrutinio.</span>
           </h2>
           <p class="text-white/80 text-xs leading-relaxed">
-            España conquistó su segunda Copa del Mundo el 19 de julio en Nueva York/Nueva Jersey. Ahora seguimos el impacto que dejó el torneo en las comunidades anfitrionas.
+            Reuters informó el 17 de septiembre que Debbie Hewitt pidió documentación a la FIFA sobre el proyecto comercial del Mundial y el caso Balogun.
           </p>
+          <button onclick="openStoryModal('mundial-actualidad')" class="text-[10px] text-goldAccent font-bold underline">Por Correo USA · Leer noticia y fuente →</button>
         </div>
       </div>
 
@@ -781,7 +800,7 @@
             <span class="text-[10px] font-black uppercase tracking-widest text-redAccent">Encuesta Interactiva</span>
             <h3 class="font-serif text-xl font-extrabold text-navy mt-0.5">¿Cuál será el mayor legado del Mundial en EE.UU.?</h3>
             <p class="text-xs text-mutedText mt-0.5">
-              Vote y vea cómo se distribuyen las respuestas durante esta sesión.
+              Participación recreativa, sin valor estadístico. Los votos se guardan únicamente durante esta sesión.
             </p>
           </div>
 
@@ -831,27 +850,28 @@
         <span class="text-[10px] font-black uppercase tracking-widest text-redAccent">Cultura &amp; Comunidad</span>
         <h2 class="font-serif text-2xl font-extrabold text-navy">La vida hispana en Estados Unidos</h2>
         <p class="text-xs text-mutedText leading-relaxed">
-          Deportes, gastronomía, entretenimiento, identidad y tendencias que conectan a las comunidades hispanas de costa a costa.
+          Mes de la Herencia Hispana: una selección de cultura, historia y participación comunitaria. Edición del 20 de septiembre de 2026.
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <button onclick="showSection('mundial')" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
-          <span class="text-redAccent text-[9px] font-black uppercase tracking-widest">Deportes &amp; Cultura</span>
-          <h3 class="font-serif text-base font-bold text-navy mt-1">El legado cultural del Mundial 2026</h3>
-          <p class="text-[11px] text-mutedText mt-1">España fue campeona y las ciudades sede ya entraron en la etapa de medir el impacto que dejó el torneo.</p>
+        <button onclick="openStoryModal('hot-3')" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+          <span class="text-redAccent text-[9px] font-black uppercase tracking-widest">Herencia Hispana</span>
+          <h3 class="font-serif text-base font-bold text-navy mt-1">Una celebración hasta el 15 de octubre</h3>
+          <p class="text-[11px] text-mutedText mt-1">Museos y archivos ofrecen recursos para conocer las contribuciones hispanas a Estados Unidos. Fuente: portal federal de Herencia Hispana.</p>
         </button>
 
-        <button onclick="showSection('condados')" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
-          <span class="text-goldAccent text-[9px] font-black uppercase tracking-widest">Vida Local</span>
-          <h3 class="font-serif text-base font-bold text-navy mt-1">Historias desde nuestros condados</h3>
-          <p class="text-[11px] text-mutedText mt-1">Miami-Dade, Harris, Maricopa y Clark serán los primeros focos para cultura, negocios y comunidad.</p>
+        <button onclick="openStoryModal('salsa-cultura')" class="bg-white p-4 border border-navy/10 shadow-sm text-left hover:border-redAccent transition-all">
+          <span class="text-goldAccent text-[9px] font-black uppercase tracking-widest">Música &amp; Identidad</span>
+          <h3 class="font-serif text-base font-bold text-navy mt-1">¡Puro Ritmo!: la historia de la salsa</h3>
+          <p class="text-[11px] text-mutedText mt-1">El Smithsonian propone un recorrido presencial y digital por sus raíces y su dimensión migrante. Selección cultural del 20 de septiembre.</p>
         </button>
 
         <div class="bg-navy text-white p-4 shadow-sm">
-          <span class="text-goldAccent text-[9px] font-black uppercase tracking-widest">Agenda Correo USA</span>
-          <h3 class="font-serif text-base font-bold mt-1">Qué debe vivir aquí</h3>
-          <p class="text-[11px] text-white/75 mt-1">Festivales, gastronomía, música, cine, perfiles, tendencias y recomendaciones locales con enfoque editorial.</p>
+          <span class="text-goldAccent text-[9px] font-black uppercase tracking-widest">Pensilvania · Correo USA</span>
+          <h3 class="font-serif text-base font-bold mt-1">Easton reúne a la agenda latina</h3>
+          <p class="text-[11px] text-white/75 mt-1">La Pennsylvania Latino Convention comienza el 20 de septiembre con economía, educación y participación cívica en su agenda.</p>
+          <button onclick="openStoryModal('pensilvania-20260919')" class="text-[10px] text-goldAccent underline mt-2">Leer nuestra cobertura →</button>
         </div>
       </div>
     </div>
@@ -860,41 +880,41 @@
     <div id="view-opinion" class="view-panel hidden space-y-5">
       
       <div class="bg-navy text-white p-4 sm:p-5 shadow-sm border-l-4 border-goldAccent">
-        <span class="text-goldAccent text-[10px] font-black uppercase tracking-widest">Perspectivas y Columnistas</span>
+        <span class="text-goldAccent text-[10px] font-black uppercase tracking-widest">Opinión editorial · 20/09/2026</span>
         <h2 class="font-serif text-2xl font-extrabold mt-0.5">Voces de la Comunidad</h2>
         <p class="text-white/80 text-xs mt-1 max-w-2xl leading-relaxed">
-          Reflexiones cualitativas de académicos, líderes empresariales y analistas sociopolíticos sobre el futuro hispano.
+          Lecturas de Correo USA sobre participación, economía e identidad. Esta sección expresa análisis editorial, separado de las noticias y las encuestas.
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="bg-white p-4 border border-navy/10 shadow-sm flex flex-col justify-between space-y-3">
           <p class="font-serif italic text-sm text-navy leading-relaxed">
-            "Elecciones 2026: costo de vida, vivienda e inmigración concentran una parte importante de la conversación del votante latino."
+            El valor de una encuesta depende de su fecha, muestra y método. Para interpretar noviembre, también hará falta seguir las carreras locales y la participación.
           </p>
           <div class="border-t border-navy/10 pt-2">
             <strong class="text-xs text-navy block font-bold">Editorial Correo USA</strong>
-            <span class="text-[9px] uppercase tracking-wider text-goldAccent font-extrabold block">Agenda Electoral</span>
+            <button onclick="openStoryModal('hero-2')" class="text-[9px] uppercase tracking-wider text-goldAccent font-extrabold block underline">Contexto: sondeo Marquette →</button>
           </div>
         </div>
 
         <div class="bg-white p-4 border border-navy/10 shadow-sm flex flex-col justify-between space-y-3">
           <p class="font-serif italic text-sm text-navy leading-relaxed">
-            "La inflación se moderó en julio, mientras las tasas de interés siguen condicionando vivienda, consumo y financiamiento."
+            El IPC nacional ayuda a entender la tendencia de los precios. Cada familia necesita contrastarlo con su propio presupuesto de vivienda, alimentos y transporte.
           </p>
           <div class="border-t border-navy/10 pt-2">
-            <strong class="text-xs text-navy block font-bold">Mesa de Economía</strong>
-            <span class="text-[9px] uppercase tracking-wider text-goldAccent font-extrabold block">Datos &amp; Bolsillo</span>
+            <strong class="text-xs text-navy block font-bold">Editorial Correo USA</strong>
+            <button onclick="openStoryModal('hot-2')" class="text-[9px] uppercase tracking-wider text-goldAccent font-extrabold block underline">Contexto: IPC de agosto →</button>
           </div>
         </div>
 
         <div class="bg-white p-4 border border-navy/10 shadow-sm flex flex-col justify-between space-y-3">
           <p class="font-serif italic text-sm text-navy leading-relaxed">
-            "Después del Mundial, las ciudades sede miden el impacto sobre turismo, negocios locales y crecimiento del fútbol juvenil."
+            El Mes de la Herencia Hispana ofrece una oportunidad para acercar a las nuevas generaciones a la memoria, la música y las historias de sus comunidades.
           </p>
           <div class="border-t border-navy/10 pt-2">
-            <strong class="text-xs text-navy block font-bold">Mesa de Comunidad</strong>
-            <span class="text-[9px] uppercase tracking-wider text-goldAccent font-extrabold block">Cultura &amp; Deportes</span>
+            <strong class="text-xs text-navy block font-bold">Editorial Correo USA</strong>
+            <button onclick="openStoryModal('hot-3')" class="text-[9px] uppercase tracking-wider text-goldAccent font-extrabold block underline">Contexto: agenda cultural →</button>
           </div>
         </div>
       </div>
@@ -985,6 +1005,8 @@
         <div>In God We Trust</div>
       </div>
 
+      <p class="text-[9px] text-white/60">Actualización editorial: <time datetime="2026-09-20">20/09/2026</time> · El contador electoral se actualiza automáticamente. Los titulares corresponden a esta edición.</p>
+
       <!-- Bottom Sub-bar -->
       <div class="pt-2 flex flex-col md:flex-row justify-between items-center text-[9px] text-white/50 font-bold uppercase tracking-widest gap-2">
         <div>© 2026 CORREO USA. TODOS LOS DERECHOS RESERVADOS.</div>
@@ -1022,9 +1044,9 @@
           name: 'Florida',
           popShare: 29.2,
           population: '23,46 M',
-          status: 'Primaria 18 Ago',
+          status: 'Rumbo al 3 Nov',
           statusColor: 'bg-redAccent text-white',
-          description: 'Florida entra en la recta final de sus primarias del 18 de agosto, con especial atención sobre Miami-Dade y Florida Central.',
+          description: 'Florida prepara la elección general de noviembre. Nuestra cobertura sigue Miami-Dade y el calendario oficial de participación electoral.',
           highlights: ['Población hispana: 29,2% según QuickFacts 2025.', 'La elección general será el 3 de noviembre de 2026.']
         },
         {
@@ -1044,7 +1066,7 @@
           population: '7,62 M',
           status: 'Maricopa',
           statusColor: 'bg-goldAccent text-navy',
-          description: 'Arizona llega a la elección general después de sus primarias de julio, con Maricopa como principal centro demográfico y electoral.',
+          description: 'Arizona se prepara para noviembre, con Maricopa como principal centro demográfico y electoral. Comprueba tu registro y la información de tu oficina electoral local.',
           highlights: ['Población hispana: 32,5% según QuickFacts 2025.', 'Maricopa County registra 32,3% de población hispana.']
         },
         {
@@ -1174,31 +1196,78 @@
           content: 'La líder opositora venezolana María Corina Machado evalúa regresar a Venezuela después de permanecer fuera del país desde 2025. En una entrevista con Wall Street Journal, Machado expresó que tomó la decisión de regresar a Venezuela para impulsar la transición a la democracia. La afirmación ocurrió horas antes de que la Casa Blanca confirmara que el presidente de Estados Unidos, Donald Trump, sostendrá un encuentro con la presidenta encargada de Venezuela, Delcy Rodríguez, en Nueva York, durante la Asamblea General de Naciones Unidas. Estados Unidos no ha expresado una postura clara frente al posible regreso de Machado a Venezuela; sin embargo, el secretario de Estado estadounidense, Marco Rubio, aseveró que “ella es una ciudadana venezolana que tiene derecho de regresar a su país”.'
         },
         'hero-2': {
-          title: 'Inflación en 3,4%: qué significa para el bolsillo antes de las elecciones',
-          category: 'ECONOMÍA',
-          author: 'Redacción Economía',
+          title: 'Marquette: demócratas amplían ventaja en el sondeo nacional al Congreso',
+          category: 'ELECCIONES 2026 / ENCUESTA',
+          author: 'Correo USA',
+          date: '2026-09-20',
+          location: 'Estados Unidos',
           image: 'https://i.imgur.com/IrKWYNr.jpeg',
-          imagePosition: 'center 12%',
-          imageAlt: 'Inflación y costo de vida en Estados Unidos',
-          content: 'El Índice de Precios al Consumidor aumentó 3,4% en los doce meses terminados en julio de 2026. La Reserva Federal mantuvo su rango objetivo de tasas entre 3,50% y 3,75% en su reunión del 29 de julio.'
+          imageAlt: 'Donald Trump, fotografía de archivo',
+          content: 'La encuesta nacional de Marquette publicada el 16 de septiembre sitúa a los demócratas en 54% y a los republicanos en 41% entre votantes probables para el Congreso. El trabajo de campo se realizó del 2 al 9 de septiembre: 1.023 adultos, de los cuales 581 fueron clasificados como votantes probables; el margen de error de este subgrupo es ±4,3 puntos. La aprobación de Donald Trump entre adultos fue 37%. El sondeo mide preferencias nacionales y no proyecta ganadores por distrito ni el reparto de escaños.',
+          sources: [{ label: 'Marquette Law School Poll · Publicado 16/09/2026 · Metodología y resultados', url: 'https://law.marquette.edu/poll/2026/09/16/mlspsc35-1/' }]
         },
         'hot-1': {
-          title: 'Midterms 2026: 435 escaños de la Cámara estarán en juego',
-          category: 'ELECCIONES 2026',
-          author: 'Redacción Política',
-          content: 'La elección general federal será el 3 de noviembre de 2026. Todos los 435 escaños de la Cámara de Representantes estarán en juego, junto con 35 escaños del Senado previstos para este ciclo.'
+          title: 'La Reserva Federal eleva su tasa al rango de 3,75%–4,00%',
+          category: 'ECONOMÍA',
+          author: 'Correo USA',
+          date: '2026-09-20',
+          location: 'Washington, Estados Unidos',
+          content: 'El 16 de septiembre, la Reserva Federal elevó un cuarto de punto porcentual el rango objetivo de los fondos federales, hasta 3,75%–4,00%. La decisión fue unánime. El comunicado describe una actividad económica sólida y una inflación todavía elevada. El nuevo rango sirve como referencia de política monetaria; las tasas de cada préstamo dependen de sus condiciones particulares.',
+          sources: [{ label: 'Reserva Federal · Comunicado del FOMC, 16/09/2026', url: 'https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm' }]
         },
         'hot-2': {
-          title: 'Ciudadanía por nacimiento vuelve al centro de la batalla judicial',
-          category: 'INMIGRACIÓN',
-          author: 'Redacción Correo USA',
-          content: 'La disputa sobre ciudadanía por nacimiento continúa generando litigios federales en agosto de 2026. Correo USA seguirá las decisiones judiciales y sus efectos prácticos para las familias.'
+          title: 'El IPC de agosto registra un alza mensual de 0,4% y anual de 3,4%',
+          category: 'ECONOMÍA / COSTO DE VIDA',
+          author: 'Correo USA',
+          date: '2026-09-20',
+          location: 'Estados Unidos',
+          content: 'El informe del Bureau of Labor Statistics publicado el 11 de septiembre sitúa la inflación de agosto en 3,4% interanual. El índice aumentó 0,4% frente al mes anterior, con ajuste estacional. Sin alimentos ni energía, la variación anual fue 2,4%. El IPC de septiembre está previsto para el 14 de octubre a las 8:30 a. m., hora del Este.',
+          sources: [{ label: 'BLS · IPC de agosto, publicado 11/09/2026', url: 'https://www.bls.gov/news.release/archives/cpi_09112026.htm' }, { label: 'BLS · Calendario de publicación del IPC', url: 'https://www.bls.gov/schedule/news_release/cpi.htm' }]
         },
         'hot-3': {
-          title: 'España levanta su segunda Copa del Mundo',
-          category: 'MUNDIAL 2026',
-          author: 'Redacción Deportes',
-          content: 'España venció 1-0 a Argentina después de tiempo extra el 19 de julio de 2026 en Nueva York/Nueva Jersey y conquistó su segundo título mundial.'
+          title: 'Herencia Hispana: una agenda cultural hasta el 15 de octubre',
+          category: 'CULTURA / COMUNIDAD',
+          author: 'Correo USA',
+          date: '2026-09-20',
+          location: 'Estados Unidos',
+          content: 'Del 15 de septiembre al 15 de octubre se celebra el Mes de la Herencia Hispana. La Biblioteca del Congreso, el Smithsonian y otras instituciones federales reúnen exposiciones, archivos y materiales educativos sobre las contribuciones de los hispanos al país. Su portal de 2026 permite explorar la programación y los recursos digitales.',
+          sources: [{ label: 'National Hispanic American Heritage Month · Portal oficial 2026', url: 'https://hispanicheritagemonth.gov/' }]
+        },
+        'florida-agenda': {
+          title: 'Florida: las fechas que debes tener a mano para noviembre',
+          category: 'ELECCIONES 2026 / SERVICIO',
+          author: 'Correo USA',
+          date: '2026-09-20',
+          location: 'Florida',
+          content: 'Según el calendario estatal, el envío de boletas solicitadas por electores dentro del país se realiza del 24 de septiembre al 1 de octubre. La inscripción para la elección general cierra el 5 de octubre; el plazo para solicitar el envío de una boleta por correo vence el 22 de octubre. La votación anticipada obligatoria será del 24 al 31 de octubre, con posibles días adicionales por condado. La elección general es el 3 de noviembre. Confirma horarios y condiciones con tu supervisor electoral.',
+          sources: [{ label: 'Florida Division of Elections · Calendario oficial 2026', url: 'https://dos.fl.gov/elections/for-voters/election-dates/' }]
+        },
+        'registro-electoral': {
+          title: 'Antes de noviembre: comprueba tu registro electoral',
+          category: 'ELECCIONES 2026 / SERVICIO',
+          author: 'Correo USA',
+          date: '2026-09-20',
+          location: 'Estados Unidos',
+          content: 'USA.gov dirige a los electores a Vote.gov para consultar las vías de inscripción de cada estado o territorio. Los métodos disponibles, documentos y plazos varían según el lugar de residencia. Revisa tu situación y confirma la información con la oficina electoral correspondiente antes de la elección de noviembre.',
+          sources: [{ label: 'USA.gov · Guía oficial de registro electoral', url: 'https://www.usa.gov/register-to-vote' }]
+        },
+        'salsa-cultura': {
+          title: '¡Puro Ritmo!: la salsa como historia de migración e identidad',
+          category: 'CULTURA / SELECCIÓN EDITORIAL',
+          author: 'Correo USA',
+          date: '2026-09-20',
+          location: 'Washington / En línea',
+          content: 'La agenda oficial de Herencia Hispana 2026 destaca ¡Puro Ritmo!, del Smithsonian: una exposición sobre las raíces afrocubanas de la salsa y su relación con la migración y la identidad. El recorrido tiene una versión digital para explorar desde casa. Consulta la información del museo antes de organizar una visita.',
+          sources: [{ label: 'Herencia Hispana 2026 · Selección oficial del Smithsonian', url: 'https://hispanicheritagemonth.gov/' }, { label: 'Smithsonian · ¡Puro Ritmo!', url: 'https://latino.si.edu/exhibitions/puro-ritmo' }]
+        },
+        'mundial-actualidad': {
+          title: 'Hewitt solicita a la FIFA documentos sobre el Mundial y el caso Balogun',
+          category: 'MUNDIAL 2026 / ACTUALIDAD',
+          author: 'Correo USA',
+          date: '2026-09-20',
+          location: 'Fútbol internacional',
+          content: 'Debbie Hewitt, presidenta de la federación inglesa y vicepresidenta de la FIFA, pidió documentos sobre el abandonado proyecto comercial del Mundial y la suspensión de Folarin Balogun, según Reuters el 17 de septiembre. La agencia indicó que la FIFA no había respondido a su solicitud de comentarios al publicar la información.',
+          sources: [{ label: 'Reuters · Información publicada 17/09/2026', url: 'https://www.reuters.com/sports/soccer/fas-hewitt-asks-infantino-release-records-world-cup-plan-balogun-suspension-2026-09-17/' }]
         }
       }
     };
@@ -1213,8 +1282,13 @@
        ========================================================================== */
     document.addEventListener('DOMContentLoaded', function() {
       renderLatestNews();
+      initTicker();
       initDateDisplay();
       initElectionCountdown();
+      setInterval(() => { initDateDisplay(); initElectionCountdown(); }, 60000);
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) { initDateDisplay(); initElectionCountdown(); }
+      });
       renderIntelligenceCards('all');
       renderStateTabs();
       selectState('FL');
@@ -1229,6 +1303,15 @@
 
     function formatNewsDate(date) {
       return date.split('-').reverse().join('/');
+    }
+
+    function initTicker() {
+      const track = document.getElementById('ticker-track');
+      if (!track || track.children.length > 1) return;
+      const copy = track.firstElementChild.cloneNode(true);
+      copy.setAttribute('aria-hidden', 'true');
+      copy.querySelectorAll('button, a').forEach(el => { el.tabIndex = -1; });
+      track.appendChild(copy);
     }
 
     function renderLatestNews() {
@@ -1255,25 +1338,33 @@
       const dateEl = document.getElementById('current-date-display');
       if (dateEl) {
         try {
-          const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+          const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'America/New_York' };
           const nowStr = new Date().toLocaleDateString('es-ES', options).toUpperCase();
           dateEl.textContent = nowStr;
         } catch(e) {
-          dateEl.textContent = "DOMINGO, 16 DE AGOSTO DE 2026";
+          dateEl.textContent = 'CORREO USA · ELECCIONES 2026';
         }
       }
     }
 
-    function initElectionCountdown() {
-      const target = new Date('2026-11-03T00:00:00');
-      const now = new Date();
-      const diff = target.getTime() - now.getTime();
-      const days = Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+    function electionDaysRemaining(now = new Date()) {
+      const parts = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit'
+      }).formatToParts(now);
+      const date = Object.fromEntries(parts.map(part => [part.type, part.value]));
+      const today = Date.UTC(Number(date.year), Number(date.month) - 1, Number(date.day));
+      return Math.round((Date.UTC(2026, 10, 3) - today) / 86400000);
+    }
 
+    function initElectionCountdown(now = new Date()) {
+      const remaining = electionDaysRemaining(now);
+      const days = Math.max(0, remaining);
       const homeEl = document.getElementById('home-election-countdown');
       const centerEl = document.getElementById('election-countdown');
       if (homeEl) homeEl.textContent = days;
       if (centerEl) centerEl.textContent = days;
+      const tickerText = remaining > 0 ? `FALTAN ${days} DÍAS PARA EL 3 DE NOVIEMBRE` : remaining === 0 ? 'HOY ES LA ELECCIÓN GENERAL' : 'LA ELECCIÓN GENERAL FUE EL 3 DE NOVIEMBRE';
+      document.querySelectorAll('[data-election-ticker]').forEach(el => { el.textContent = tickerText; });
     }
 
     /* ==========================================================================
@@ -1636,6 +1727,7 @@
         ${story.location ? `<p class="text-[10px] font-bold text-redAccent uppercase tracking-wider">${escapeNewsText(story.location)}</p>` : ''}
         ${story.image ? `<div class="overflow-hidden bg-navy mt-2 flex items-center justify-center"><img src="${story.image}" alt="${story.imageAlt || story.title}" class="w-full max-h-80 editorial-article-full" style="object-position: ${story.imagePosition || 'center'};"></div>` : ''}
         <p class="text-xs text-inkText/90 leading-relaxed pt-1">${story.content}</p>
+        ${story.sources ? `<div class="text-[10px] text-mutedText border-t border-navy/10 pt-2 space-y-1"><strong class="block text-navy">Fuentes y verificación · Consultadas el 20/09/2026</strong>${story.sources.map(source => `<a href="${escapeNewsText(source.url)}" target="_blank" rel="noopener noreferrer" class="block text-redAccent underline">${escapeNewsText(source.label)} ↗</a>`).join('')}</div>` : ''}
         <div class="pt-3 flex justify-end">
           <button onclick="closeModal()" class="bg-navy text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 hover:bg-redAccent transition-colors">
             Cerrar Lectura
