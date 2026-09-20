@@ -95,21 +95,25 @@
       scrollbar-width: none;
     }
 
-    /* Editorial image safety: preserve faces in close-up photographs */
+    /* Editorial image treatment: fill each card without colored sidebars */
     .editorial-face-safe {
-      object-fit: contain;
+      object-fit: cover;
       object-position: center;
+      display: block;
     }
 
     .editorial-face-safe-secondary {
-      object-fit: contain;
-      object-position: center;
+      object-fit: cover;
+      object-position: center 15%;
+      display: block;
     }
 
     .editorial-article-full {
       object-fit: contain;
       object-position: center;
-      background: #0D1B3D;
+      background: transparent;
+      display: block;
+      margin-inline: auto;
     }
 
     /* Multi-line clamp */
