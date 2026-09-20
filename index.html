@@ -87,13 +87,13 @@
 
     /* Editorial image safety: preserve faces in close-up photographs */
     .editorial-face-safe {
-      object-fit: cover;
-      object-position: center 15%;
+      object-fit: contain;
+      object-position: center;
     }
 
     .editorial-face-safe-secondary {
-      object-fit: cover;
-      object-position: center 12%;
+      object-fit: contain;
+      object-position: center;
     }
 
     .editorial-article-full {
@@ -264,28 +264,25 @@
         <!-- Left Main Featured Story (7 Cols) -->
         <article class="lg:col-span-7 flex flex-col justify-between group cursor-pointer border-b lg:border-b-0 border-navy/10 pb-3 lg:pb-0" onclick="openStoryModal('hero-1')">
           <div>
-            <div class="relative overflow-hidden bg-navy mb-2 h-44 sm:h-52 md:h-56 w-full shadow-sm">
-              <span class="absolute top-0 left-0 z-20 bg-redAccent text-white text-[9px] font-black uppercase tracking-widest px-2 py-0.5">
-                PULSO HISPANO
-              </span>
-              <!-- Photo matching voters/discussion room with compact height constraint -->
-              <img src="https://i.imgur.com/ZagT1NG.jpeg" alt="Elecciones y actualidad política en Estados Unidos" class="w-full h-full editorial-face-safe transition-transform duration-500">
+            <span class="inline-block bg-redAccent text-white text-[9px] font-black uppercase tracking-widest px-2 py-0.5 mb-2">MIAMI-DADE, FLORIDA</span>
+            <div class="overflow-hidden bg-navy mb-2 h-44 sm:h-52 md:h-56 w-full shadow-sm">
+              <img src="https://i.imgur.com/58BLDRo.jpeg" alt="Fotografía de la noticia sobre María Elvira Salazar y Donald Trump" class="w-full h-full editorial-face-safe" fetchpriority="high">
             </div>
             
             <h1 class="font-serif text-xl sm:text-2xl md:text-2xl font-extrabold text-navy group-hover:text-redAccent transition-colors leading-snug mb-1">
-              Florida vota este martes: el pulso hispano entra al centro de las primarias 2026
+              Redadas de ICE en Miami crean diferencias entre María Elvira Salazar y Donald Trump
             </h1>
             <p class="text-mutedText text-[11px] leading-relaxed mb-2 font-sans line-clamp-2">
-              Con las primarias del 18 de agosto a horas de comenzar, Miami-Dade y el resto de Florida ofrecen una primera lectura del ánimo electoral rumbo al 3 de noviembre.
+              Salazar cuestiona los operativos migratorios y Trump responde a la congresista republicana por Florida.
             </p>
           </div>
 
           <div class="flex items-center space-x-2 text-[10px] font-bold text-navy/70 uppercase tracking-wider border-t border-navy/10 pt-1.5">
-            <span>Por Redacción Correo USA</span>
+            <span>Por Correo USA</span>
             <span>•</span>
-            <span>6 min lectura</span>
+            <time datetime="2026-09-19">19/09/2026</time>
             <span>•</span>
-            <span class="text-redAccent hover:underline">Ver Análisis →</span>
+            <span class="text-redAccent hover:underline">Leer noticia →</span>
           </div>
         </article>
 
@@ -330,6 +327,14 @@
         </div>
       </section>
 
+
+      <section aria-labelledby="latest-news-title" class="space-y-3">
+        <div class="border-b border-navy/20 pb-2 flex flex-wrap items-end justify-between gap-2">
+          <h2 id="latest-news-title" class="font-serif text-xl font-extrabold text-navy">Últimas noticias</h2>
+          <span class="text-[10px] font-bold text-mutedText">Edición del 19 de septiembre de 2026</span>
+        </div>
+        <div id="latest-news-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+      </section>
 
       <!-- ELECCIONES 2026 QUICK CENTER -->
       <section class="bg-white p-3 md:p-4 shadow-sm border border-navy/10">
@@ -1115,10 +1120,58 @@
       },
       stories: {
         'hero-1': {
-          title: 'Florida vota este martes: el pulso hispano entra al centro de las primarias 2026',
+          title: 'Redadas de ICE en Miami crean diferencias entre María Elvira Salazar y Donald Trump',
+          category: 'POLÍTICA / INMIGRACIÓN',
+          author: 'Correo USA',
+          date: '2026-09-19',
+          location: 'Miami-Dade, Florida',
+          image: 'https://i.imgur.com/58BLDRo.jpeg',
+          imageAlt: 'Fotografía de la noticia sobre María Elvira Salazar y Donald Trump',
+          content: 'En un anuncio de campaña, la congresista republicana por el estado de Florida, María Elvira Salazar, se distanció de manera pública de las políticas migratorias del presidente estadounidense Donald Trump. Desde Miami-Dade, donde busca un cuarto mandato por el Distrito 27 de Florida, Salazar afirmó que algunos operativos migratorios “han ido demasiado lejos” y advirtió que votantes hispanos que respaldaron a Trump en 2024 se sienten “traicionados” por las detenciones de personas sin antecedentes penales. Tras ser cuestionado, Trump afirmó que “ella ganó gracias a él” y que Salazar se “ablandó un poco con el tema de la frontera”. La congresista también expresó que el mandatario “es el único que puede resolver este problema que arrastra Estados Unidos desde hace más de 40 años”.'
+        },
+        'hidalgo-20260919': {
+          title: 'Hidalgo entra en modo electoral con la frontera en el centro del voto hispano',
           category: 'ELECCIONES 2026',
-          author: 'Redacción Correo USA',
-          content: 'Florida celebra sus primarias estatales el 18 de agosto de 2026. La cobertura de Correo USA seguirá especialmente a Miami-Dade y Florida Central para entender cómo se mueven las prioridades del electorado hispano rumbo a la elección general del 3 de noviembre.'
+          author: 'Correo USA',
+          date: '2026-09-19',
+          location: 'Hidalgo, Texas',
+          image: 'https://i.imgur.com/dkBnb9U.jpeg',
+          imageAlt: 'Fotografía de la noticia sobre Hidalgo, Texas',
+          summary: 'El condado prepara sus centros de votación rumbo a las elecciones de medio término del 3 de noviembre.',
+          content: 'El condado de Hidalgo, en Texas, entró en la fase operativa de las elecciones de medio término del próximo 3 de noviembre con la prueba de sus máquinas de votación y la preparación de 32 centros para el voto anticipado y 69 para el día de las elecciones. El proceso comienza mientras republicanos y demócratas buscan movilizar al electorado hispano del Valle del Río Grande, donde la seguridad fronteriza mantiene un importante respaldo, aunque existen posiciones más divididas sobre las deportaciones masivas y los operativos de ICE contra trabajadores y familias establecidas en la región.'
+        },
+        'pensilvania-20260919': {
+          title: 'Pensilvania pone la agenda latina en el centro del debate antes de las midterms',
+          category: 'COMUNIDAD / ELECCIONES 2026',
+          author: 'Correo USA',
+          date: '2026-09-19',
+          location: 'Lehigh/Northampton, Pensilvania',
+          image: 'https://i.imgur.com/qg03qpt.jpeg',
+          imageAlt: 'Fotografía de la noticia sobre la Pennsylvania Latino Convention',
+          summary: 'Easton recibe tres días de encuentros sobre economía, educación, salud y participación cívica.',
+          content: 'La Pennsylvania Latino Convention comienza este 20 de septiembre en Easton, Northampton County, a pocas semanas de las elecciones de medio término del 3 de noviembre. Durante tres días, líderes comunitarios, organizaciones, empresarios y representantes de distintos sectores se reunirán para debatir sobre economía, educación, salud, negocios, participación cívica y políticas públicas, en una región donde el crecimiento de la población hispana aumenta también su importancia electoral.'
+        },
+        'gwinnett-20260919': {
+          title: 'Ossoff y Collins llevan a Gwinnett la batalla por el Senado de Georgia',
+          category: 'ELECCIONES 2026',
+          author: 'Correo USA',
+          date: '2026-09-19',
+          location: 'Gwinnett, Georgia',
+          image: 'https://i.imgur.com/WQ1X7N5.jpeg',
+          imageAlt: 'Fotografía de la noticia sobre Jon Ossoff y Mike Collins',
+          summary: 'Economía, inmigración y vivienda forman parte de la disputa por el escaño de Georgia en el Senado.',
+          content: 'El senador demócrata Jon Ossoff y el congresista republicano Mike Collins intensifican su disputa por uno de los escaños de Georgia en el Senado de Estados Unidos, con Gwinnett County como uno de los territorios clave rumbo a las elecciones del 3 de noviembre. Collins ha llevado su campaña a Norcross para hablar sobre empleo, infraestructura y reducción de regulaciones, mientras Ossoff centra parte de sus ataques en una investigación ética contra su rival. Economía, inmigración, vivienda, salud e impuestos forman parte de las principales diferencias entre ambos candidatos.'
+        },
+        'machado-20260919': {
+          title: 'Machado planea su regreso a Venezuela en medio del acercamiento entre Trump y Delcy Rodríguez',
+          category: 'INTERNACIONAL',
+          author: 'Correo USA',
+          date: '2026-09-19',
+          location: 'Venezuela / Estados Unidos',
+          image: 'https://i.imgur.com/Yjbiuy5.jpeg',
+          imageAlt: 'Fotografía de la noticia sobre el regreso de María Corina Machado a Venezuela',
+          summary: 'La dirigente opositora plantea regresar para impulsar la transición democrática en Venezuela.',
+          content: 'La líder opositora venezolana María Corina Machado evalúa regresar a Venezuela después de permanecer fuera del país desde 2025. En una entrevista con Wall Street Journal, Machado expresó que tomó la decisión de regresar a Venezuela para impulsar la transición a la democracia. La afirmación ocurrió horas antes de que la Casa Blanca confirmara que el presidente de Estados Unidos, Donald Trump, sostendrá un encuentro con la presidenta encargada de Venezuela, Delcy Rodríguez, en Nueva York, durante la Asamblea General de Naciones Unidas. Estados Unidos no ha expresado una postura clara frente al posible regreso de Machado a Venezuela; sin embargo, el secretario de Estado estadounidense, Marco Rubio, aseveró que “ella es una ciudadana venezolana que tiene derecho de regresar a su país”.'
         },
         'hero-2': {
           title: 'Inflación en 3,4%: qué significa para el bolsillo antes de las elecciones',
@@ -1159,6 +1212,7 @@
        APPLICATION INITIALIZATION
        ========================================================================== */
     document.addEventListener('DOMContentLoaded', function() {
+      renderLatestNews();
       initDateDisplay();
       initElectionCountdown();
       renderIntelligenceCards('all');
@@ -1166,6 +1220,36 @@
       selectState('FL');
       initCharts();
     });
+
+    function escapeNewsText(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      })[char]);
+    }
+
+    function formatNewsDate(date) {
+      return date.split('-').reverse().join('/');
+    }
+
+    function renderLatestNews() {
+      const ids = ['hidalgo-20260919', 'pensilvania-20260919', 'gwinnett-20260919', 'machado-20260919'];
+      document.getElementById('latest-news-grid').innerHTML = ids.map(id => {
+        const story = APP_DATA.stories[id];
+        return `<article class="bg-white border border-navy/10 shadow-sm p-3 flex flex-col gap-2">
+          <div class="text-[10px] font-black uppercase tracking-wider text-redAccent">${escapeNewsText(story.location)}</div>
+          <button type="button" onclick="openStoryModal('${id}')" class="block w-full bg-navy" aria-label="Leer: ${escapeNewsText(story.title)}">
+            <img src="${escapeNewsText(story.image)}" alt="${escapeNewsText(story.imageAlt)}" class="w-full h-48 sm:h-52 editorial-face-safe" loading="lazy" decoding="async">
+          </button>
+          <h3 class="font-serif text-lg font-extrabold text-navy leading-snug"><button type="button" onclick="openStoryModal('${id}')" class="text-left hover:text-redAccent">${escapeNewsText(story.title)}</button></h3>
+          <p class="text-xs text-mutedText leading-relaxed">${escapeNewsText(story.summary)}</p>
+          <p class="text-[10px] font-bold text-mutedText">Por ${escapeNewsText(story.author)}</p>
+          <div class="flex justify-between items-center gap-2 border-t border-navy/10 pt-2 mt-auto text-[10px] font-bold">
+            <time datetime="${story.date}" class="text-mutedText">${formatNewsDate(story.date)}</time>
+            <button type="button" onclick="openStoryModal('${id}')" class="text-redAccent hover:underline">Leer noticia →</button>
+          </div>
+        </article>`;
+      }).join('');
+    }
 
     function initDateDisplay() {
       const dateEl = document.getElementById('current-date-display');
@@ -1548,7 +1632,8 @@
       content.innerHTML = `
         <span class="text-redAccent text-[9px] font-black uppercase tracking-widest block">${story.category}</span>
         <h2 class="font-serif text-xl font-extrabold text-navy leading-tight">${story.title}</h2>
-        <div class="text-[10px] font-bold text-mutedText border-b border-navy/10 pb-1.5">Por ${story.author} • Correo USA</div>
+        <div class="text-[10px] font-bold text-mutedText border-b border-navy/10 pb-1.5">Por ${escapeNewsText(story.author)}${story.date ? ` • <time datetime="${story.date}">${formatNewsDate(story.date)}</time>` : ''}</div>
+        ${story.location ? `<p class="text-[10px] font-bold text-redAccent uppercase tracking-wider">${escapeNewsText(story.location)}</p>` : ''}
         ${story.image ? `<div class="overflow-hidden bg-navy mt-2 flex items-center justify-center"><img src="${story.image}" alt="${story.imageAlt || story.title}" class="w-full max-h-80 editorial-article-full" style="object-position: ${story.imagePosition || 'center'};"></div>` : ''}
         <p class="text-xs text-inkText/90 leading-relaxed pt-1">${story.content}</p>
         <div class="pt-3 flex justify-end">
