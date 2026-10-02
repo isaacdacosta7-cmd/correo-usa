@@ -4,6 +4,8 @@ const vm = require('node:vm');
 const assert = require('node:assert/strict');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const robots = fs.readFileSync(path.join(__dirname, '..', 'robots.txt'), 'utf8');
+const sitemap = fs.readFileSync(path.join(__dirname, '..', 'sitemap.xml'), 'utf8');
 const scripts = [...html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)]
   .filter(m => !m[1].includes('application/ld+json'))
   .map(m => m[2]);
@@ -126,9 +128,12 @@ assert.ok(elements['modal-content'].innerHTML.includes('Gwinnett County'));
 assert.ok(elements['modal-content'].innerHTML.includes('Jon Ossoff'));
 
 assert.ok(html.includes('<link rel="canonical" href="https://www.correousanews.com/">'));
+assert.ok(html.includes('<link rel="sitemap" type="application/xml" href="https://www.correousanews.com/sitemap.xml">'));
 assert.ok(html.includes('application/ld+json'));
 assert.ok(html.includes('NewsMediaOrganization'));
 assert.ok(html.includes('max-image-preview:large'));
+assert.ok(robots.includes('Sitemap: https://www.correousanews.com/sitemap.xml'));
+assert.ok(sitemap.includes('<loc>https://www.correousanews.com/</loc>'));
 const ticker = html.split('<!-- TOP TICKER BAR (COMPACT) -->')[1].split('<!-- HEADER (COMPACT) -->')[0];
 for (const id of todayIds) assert.ok(!ticker.includes(`openStoryModal('${id}')`), id);
 console.log('PASS: 15 condados interactivos, 7 filtros estatales, SEO completo y cinta independiente.');
