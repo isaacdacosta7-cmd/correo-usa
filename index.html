@@ -1,9 +1,64 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-US">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CORREO USA - Información para decidir</title>
+  <title>Correo USA | Noticias de Estados Unidos en español</title>
+  <meta name="description" content="Noticias de Estados Unidos en español para la comunidad hispana: elecciones 2026, inmigración, economía, Florida, Texas y los condados clave rumbo al 3 de noviembre.">
+  <meta name="keywords" content="noticias Estados Unidos en español, Correo USA, elecciones 2026, midterms 2026, comunidad hispana, voto latino, inmigración, economía, Florida, Texas, Donald Trump, condados clave">
+  <meta name="author" content="Correo USA">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="news_keywords" content="Estados Unidos, elecciones 2026, comunidad hispana, inmigración, economía, Florida, Texas, Donald Trump">
+  <meta name="theme-color" content="#0D1B3D">
+  <link rel="canonical" href="https://www.correousanews.com/">
+  <link rel="alternate" hreflang="es-US" href="https://www.correousanews.com/">
+  <link rel="alternate" hreflang="x-default" href="https://www.correousanews.com/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_US">
+  <meta property="og:site_name" content="Correo USA">
+  <meta property="og:title" content="Correo USA | Noticias de Estados Unidos en español">
+  <meta property="og:description" content="Información para decidir: elecciones 2026, inmigración, economía y noticias para la comunidad hispana en Estados Unidos.">
+  <meta property="og:url" content="https://www.correousanews.com/">
+  <meta property="og:image" content="https://i.imgur.com/0un7YLr.png">
+  <meta property="og:image:alt" content="Logotipo de Correo USA">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Correo USA | Noticias de Estados Unidos en español">
+  <meta name="twitter:description" content="Elecciones 2026, inmigración, economía y comunidad hispana en Estados Unidos.">
+  <meta name="twitter:image" content="https://i.imgur.com/0un7YLr.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "NewsMediaOrganization",
+        "@id": "https://www.correousanews.com/#organization",
+        "name": "Correo USA",
+        "url": "https://www.correousanews.com/",
+        "logo": { "@type": "ImageObject", "url": "https://i.imgur.com/0un7YLr.png" },
+        "sameAs": ["https://www.instagram.com/correousanews/"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.correousanews.com/#website",
+        "url": "https://www.correousanews.com/",
+        "name": "Correo USA",
+        "inLanguage": "es-US",
+        "publisher": { "@id": "https://www.correousanews.com/#organization" }
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": "https://www.correousanews.com/#home",
+        "url": "https://www.correousanews.com/",
+        "name": "Noticias de Estados Unidos en español",
+        "description": "Cobertura de elecciones, inmigración, economía y comunidad hispana en Estados Unidos.",
+        "isPartOf": { "@id": "https://www.correousanews.com/#website" },
+        "about": ["Elecciones de medio término de 2026", "Comunidad hispana en Estados Unidos", "Inmigración", "Economía de Estados Unidos"]
+      }
+    ]
+  }
+  </script>
 
   <!-- Google Fonts: Playfair Display (Editorial Headlines) & Inter (Body/UI) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -144,7 +199,8 @@
   -->
   <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
-
+  </head>
+  <body>
 
   <!-- TOP TICKER BAR (COMPACT) -->
   <div class="bg-redAccent text-white text-[10px] font-extrabold uppercase tracking-wider overflow-hidden border-b border-navy/20 relative z-50">
@@ -156,15 +212,15 @@
       <div class="overflow-hidden w-full relative">
         <div id="ticker-track" class="animate-ticker whitespace-nowrap text-[10px] font-bold">
           <div class="ticker-copy">
-          <button onclick="openStoryModal('caravana-20261002')" class="hover:underline">CARAVANA DE MÁS DE 600 MIGRANTES AVANZA HACIA EL NORTE DE MÉXICO</button>
+          <span>TRUMP INICIA UNA GIRA ELECTORAL DE 32 DÍAS RUMBO A LAS MIDTERMS</span>
           <span class="text-navy font-black">■</span>
-          <button onclick="openStoryModal('rick-scott-save-20261002')" class="hover:underline">RICK SCOTT PRESIONA AL SENADO PARA APROBAR IDENTIFICACIÓN CON FOTO PARA VOTAR</button>
+          <span>LA CORTE SUPREMA REVISARÁ LA POLÍTICA DE DETENCIÓN MIGRATORIA OBLIGATORIA</span>
           <span class="text-navy font-black">■</span>
-          <button onclick="openStoryModal('trump-midterms-20261002')" class="hover:underline">TRUMP PIDE VOTAR REPUBLICANO: “PRETENDAN QUE ESTOY EN LA BOLETA”</button>
+          <span>DHS AFIRMA QUE ICE CARECE DE UN PLAN PARA DESPLEGARSE MASIVAMENTE EN CENTROS DE VOTACIÓN</span>
           <span class="text-navy font-black">■</span>
-          <button onclick="openStoryModal('maga-motivacion-20261002')" class="hover:underline">MAGA IGUALA A LOS DEMÓCRATAS EN MOTIVACIÓN ELECTORAL: 71% A 71%</button>
+          <span>EL PENTÁGONO DUPLICA EL PAGO POR FUEGO HOSTIL PARA MILITARES EN ZONAS DE COMBATE</span>
           <span class="text-navy font-black">■</span>
-          <button onclick="openStoryModal('byron-donalds-20261002')" class="hover:underline">BYRON DONALDS PROMETE REFORZAR LA LEY Y EL ORDEN EN FLORIDA</button>
+          <span>RUBIO VIAJARÁ A ISLANDIA, GRECIA Y PORTUGAL DEL 5 AL 8 DE OCTUBRE</span>
           <span class="text-navy font-black">■</span>
           <span>ELECCIONES 2026: <span data-election-ticker>RUMBO AL 3 DE NOVIEMBRE</span></span>
           <span class="text-navy font-black">■</span>
@@ -175,8 +231,6 @@
   </div>
 
   <!-- HEADER (COMPACT) -->
-  </head>
-  <body>
   <header class="bg-navy text-white sticky top-0 z-40 shadow-sm">
     
     <!-- Top Utility Bar -->
@@ -308,16 +362,16 @@
         <!-- Right Secondary News Column (5 Cols) -->
         <div class="lg:col-span-5 flex flex-col justify-between space-y-3 lg:border-l lg:border-navy/10 lg:pl-4">
           
-          <!-- Secondary Article 1 with Shipping Cargo Photo -->
-          <article class="group cursor-pointer border-b border-navy/10 pb-3" onclick="openStoryModal('rick-scott-save-20261002')">
+          <!-- Secondary Article 1 -->
+          <article class="group cursor-pointer border-b border-navy/10 pb-3" onclick="openStoryModal('trump-accounts-20261002')">
             <div class="overflow-hidden mb-1.5 h-24 sm:h-28 w-full">
-              <img src="https://i.imgur.com/BUTNCVB.jpeg" alt="Rick Scott durante una intervención pública" class="w-full h-full editorial-face-safe-secondary transition-transform duration-500" style="object-position:center 22%;">
+              <img src="https://i.imgur.com/GLjtN6b.jpeg" alt="Donald Trump durante un anuncio sobre las cuentas de inversión para niños" class="w-full h-full editorial-face-safe-secondary transition-transform duration-500" style="object-position:center 20%;">
             </div>
             <h2 class="font-serif text-sm font-extrabold text-navy group-hover:text-redAccent transition-colors mb-0.5 leading-tight">
-              Rick Scott presiona al Senado para aprobar identificación con foto para votar
+              Trump Accounts: 60 millones de niños reciben una participación financiera en el futuro de EE. UU.
             </h2>
             <p class="text-mutedText text-[10px] leading-snug line-clamp-2">
-              El senador por Florida pide avanzar con el SAVE America Act antes de las elecciones.
+              El Tesoro anunció la inscripción automática de más de 60 millones de menores en cuentas de inversión con ventajas fiscales.
             </p>
           </article>
 
@@ -412,100 +466,34 @@
         </div>
       </section>
 
-      <!-- KEY STATES PREVIEW CARDS (COMPACT GRID) -->
-      <section class="space-y-3">
-        <div class="flex justify-between items-end border-b border-navy/20 pb-1.5">
-          <div>
-            <span class="text-[10px] font-black uppercase tracking-widest text-goldAccent">Geopolítica Regional</span>
-            <h2 class="font-serif text-xl font-extrabold text-navy">Estados Clave de un Vistazo</h2>
+      <!-- INTERACTIVE KEY COUNTIES -->
+      <section id="key-counties-module" aria-labelledby="key-counties-title" class="bg-white border border-navy/10 shadow-sm overflow-hidden">
+        <div class="bg-navy text-white p-4 sm:p-5 flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+          <div class="max-w-2xl">
+            <span class="text-goldAccent text-[10px] font-black uppercase tracking-[0.2em]">Condados a seguir · Midterms 2026</span>
+            <h2 id="key-counties-title" class="font-serif text-2xl sm:text-3xl font-extrabold mt-1">El mapa hispano que puede definir noviembre</h2>
+            <p class="text-white/80 text-xs sm:text-sm leading-relaxed mt-1">
+              Explora los mercados electorales que Correo USA seguirá de cerca rumbo al 3 de noviembre.
+            </p>
           </div>
-          <button onclick="showSection('estados')" class="text-[10px] font-extrabold text-redAccent hover:underline uppercase tracking-wider">
-            Ver Todos →
-          </button>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="showSection('estados'); selectState('FL')">
-            <div class="flex justify-between items-center mb-1.5">
-              <span class="font-serif text-lg font-black text-navy">Florida</span>
-              <span class="bg-redAccent text-white text-[8px] font-black px-1.5 py-0.5 uppercase tracking-widest">Rumbo al 3 Nov</span>
-            </div>
-            <p class="text-[11px] text-mutedText mb-2 leading-tight">Miami-Dade, voto por correo y preparación de la elección general de noviembre.</p>
-            <div class="text-[10px] font-extrabold text-navy">Población hispana: <span class="text-redAccent">29,2%</span></div>
-          </div>
-
-          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="showSection('estados'); selectState('TX')">
-            <div class="flex justify-between items-center mb-1.5">
-              <span class="font-serif text-lg font-black text-navy">Texas</span>
-              <span class="bg-navy text-white text-[8px] font-black px-1.5 py-0.5 uppercase tracking-widest">Mapa 2026</span>
-            </div>
-            <p class="text-[11px] text-mutedText mb-2 leading-tight">El mapa congresional y el voto latino mantienen a Texas bajo observación nacional.</p>
-            <div class="text-[10px] font-extrabold text-navy">Población hispana: <span class="text-goldAccent">40,9%</span></div>
-          </div>
-
-          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="showSection('estados'); selectState('AZ')">
-            <div class="flex justify-between items-center mb-1.5">
-              <span class="font-serif text-lg font-black text-navy">Arizona</span>
-              <span class="bg-goldAccent text-navy text-[8px] font-black px-1.5 py-0.5 uppercase tracking-widest">Maricopa</span>
-            </div>
-            <p class="text-[11px] text-mutedText mb-2 leading-tight">Maricopa vuelve a ser un punto central para medir participación y prioridades hispanas.</p>
-            <div class="text-[10px] font-extrabold text-navy">Población hispana: <span class="text-redAccent">32,5%</span></div>
-          </div>
-
-          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="showSection('estados'); selectState('NV')">
-            <div class="flex justify-between items-center mb-1.5">
-              <span class="font-serif text-lg font-black text-navy">Nevada</span>
-              <span class="bg-redAccent text-white text-[8px] font-black px-1.5 py-0.5 uppercase tracking-widest">Clark County</span>
-            </div>
-            <p class="text-[11px] text-mutedText mb-2 leading-tight">Clark County concentra población, servicios y una comunidad hispana decisiva para la agenda local.</p>
-            <div class="text-[10px] font-extrabold text-navy">Población hispana: <span class="text-redAccent">31,2%</span></div>
+          <div class="bg-white/10 border border-white/20 px-3 py-2 text-center shrink-0 min-w-28">
+            <span class="text-[8px] uppercase tracking-widest font-black text-goldAccent block">Cobertura</span>
+            <strong class="font-serif text-2xl">15</strong>
+            <span class="text-[9px] uppercase block text-white/70">condados</span>
           </div>
         </div>
-      </section>
 
-
-      <!-- COUNTY RADAR PREVIEW -->
-      <section class="space-y-3">
-        <div class="flex justify-between items-end border-b border-navy/20 pb-1.5">
-          <div>
-            <span class="text-[10px] font-black uppercase tracking-widest text-goldAccent">Cobertura Local</span>
-            <h2 class="font-serif text-xl font-extrabold text-navy">Condados en el Radar</h2>
+        <div class="p-3 sm:p-4 space-y-4">
+          <div id="key-county-filters" class="flex gap-2 overflow-x-auto no-scrollbar pb-1" aria-label="Filtrar condados por estado"></div>
+          <div class="flex items-center justify-between gap-3 border-b border-navy/10 pb-2">
+            <p id="key-county-summary" class="text-[10px] font-black uppercase tracking-widest text-redAccent" aria-live="polite"></p>
+            <span class="text-[9px] text-mutedText shrink-0">Toca una tarjeta para ampliar</span>
           </div>
-          <button onclick="showSection('condados')" class="text-[10px] font-extrabold text-redAccent hover:underline uppercase tracking-wider">
-            Ver Condados →
-          </button>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="openCountyModal('MIA')">
-            <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">Florida</span>
-            <h3 class="font-serif text-base font-black text-navy mt-0.5">Miami-Dade</h3>
-            <p class="text-[10px] text-mutedText leading-tight mt-1">Política local, inmigración, vivienda y voto hispano.</p>
-            <div class="text-[10px] font-extrabold text-navy mt-2">Hispanos: <span class="text-redAccent">70,6%</span></div>
-          </div>
-
-          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="openCountyModal('HAR')">
-            <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">Texas</span>
-            <h3 class="font-serif text-base font-black text-navy mt-0.5">Harris</h3>
-            <p class="text-[10px] text-mutedText leading-tight mt-1">Houston, economía, distritos congresionales y comunidad latina.</p>
-            <div class="text-[10px] font-extrabold text-navy mt-2">Hispanos: <span class="text-goldAccent">46,1%</span></div>
-          </div>
-
-          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="openCountyModal('MAR')">
-            <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">Arizona</span>
-            <h3 class="font-serif text-base font-black text-navy mt-0.5">Maricopa</h3>
-            <p class="text-[10px] text-mutedText leading-tight mt-1">Phoenix, crecimiento demográfico y agenda electoral.</p>
-            <div class="text-[10px] font-extrabold text-navy mt-2">Hispanos: <span class="text-redAccent">32,3%</span></div>
-          </div>
-
-          <div class="bg-white p-3 border border-navy/10 shadow-sm hover:border-redAccent transition-all cursor-pointer" onclick="openCountyModal('CLK')">
-            <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">Nevada</span>
-            <h3 class="font-serif text-base font-black text-navy mt-0.5">Clark</h3>
-            <p class="text-[10px] text-mutedText leading-tight mt-1">Las Vegas, servicios, empleo y participación comunitaria.</p>
-            <div class="text-[10px] font-extrabold text-navy mt-2">Hispanos: <span class="text-redAccent">33,4%</span></div>
+          <div id="key-county-grid" class="flex flex-wrap justify-center gap-3"></div>
+          <div class="bg-creamBg border-l-4 border-goldAccent px-3 py-2 text-[9px] sm:text-[10px] text-mutedText leading-relaxed">
+            Las cifras corresponden a población hispana del condado y ofrecen contexto demográfico. Los límites de cada distrito pueden abarcar áreas distintas del condado. La selección responde a criterios editoriales de cobertura.
           </div>
         </div>
-        <div class="text-[9px] text-mutedText">Datos demográficos: U.S. Census Bureau, QuickFacts / Vintage 2025.</div>
       </section>
 
     </div>
@@ -1145,6 +1133,23 @@
           source: 'U.S. Census Bureau QuickFacts / Vintage 2025'
         }
       ],
+      keyCountyRaces: [
+        { code: 'FL-MIA', stateCode: 'FL', state: 'Florida', county: 'Miami-Dade', race: 'FL-27', candidates: 'María Elvira Salazar (R) vs. Eliott Rodriguez (D)', hispanicShare: '70,6%', hispanicPopulation: '≈1.978.000' },
+        { code: 'FL-OSC', stateCode: 'FL', state: 'Florida', county: 'Osceola', race: 'Gobernación', candidates: 'Byron Donalds (R) vs. David Jolly (D)', hispanicShare: '58,2%', hispanicPopulation: '≈280.000' },
+        { code: 'FL-ORA', stateCode: 'FL', state: 'Florida', county: 'Orange', race: 'Gobernación', candidates: 'Byron Donalds (R) vs. David Jolly (D)', hispanicShare: '35,4%', hispanicPopulation: '≈541.000' },
+        { code: 'FL-HIL', stateCode: 'FL', state: 'Florida', county: 'Hillsborough', race: 'Gobernación', candidates: 'Byron Donalds (R) vs. David Jolly (D)', hispanicShare: '32,1%', hispanicPopulation: '≈505.000' },
+        { code: 'TX-HID', stateCode: 'TX', state: 'Texas', county: 'Hidalgo', race: 'TX-15', candidates: 'Monica De La Cruz (R) vs. Bobby Pulido (D)', hispanicShare: '92,1%', hispanicPopulation: '≈849.000' },
+        { code: 'TX-WEB', stateCode: 'TX', state: 'Texas', county: 'Webb', race: 'TX-28', candidates: 'Henry Cuellar (D) vs. Tano Tijerina (R)', hispanicShare: '94,7%', hispanicPopulation: '≈266.000' },
+        { code: 'TX-CAM', stateCode: 'TX', state: 'Texas', county: 'Cameron', race: 'TX-34', candidates: 'Vicente Gonzalez Jr. (D) vs. Eric Flores (R)', hispanicShare: '89,3%', hispanicPopulation: '≈388.000' },
+        { code: 'AZ-MAR', stateCode: 'AZ', state: 'Arizona', county: 'Maricopa', race: 'AZ-01', candidates: 'Amish Shah (D) vs. Jay Feely (R)', hispanicShare: '32,3%', hispanicPopulation: '≈1.515.000' },
+        { code: 'AZ-PIM', stateCode: 'AZ', state: 'Arizona', county: 'Pima', race: 'AZ-06', candidates: 'Juan Ciscomani (R) vs. JoAnna Mendoza (D)', hispanicShare: '37,3%', hispanicPopulation: '≈401.000' },
+        { code: 'NV-CLA', stateCode: 'NV', state: 'Nevada', county: 'Clark', race: 'NV-03', candidates: 'Susie Lee (D) vs. Marty O’Donnell (R)', hispanicShare: '33,4%', hispanicPopulation: '≈804.000' },
+        { code: 'PA-LEH', stateCode: 'PA', state: 'Pensilvania', county: 'Lehigh', race: 'PA-07', candidates: 'Ryan Mackenzie (R) vs. Bob Brooks (D)', hispanicShare: '31,0%', hispanicPopulation: '≈119.000' },
+        { code: 'PA-NOR', stateCode: 'PA', state: 'Pensilvania', county: 'Northampton', race: 'PA-07', candidates: 'Ryan Mackenzie (R) vs. Bob Brooks (D)', hispanicShare: '17,4%', hispanicPopulation: '≈56.000' },
+        { code: 'GA-GWI', stateCode: 'GA', state: 'Georgia', county: 'Gwinnett', race: 'Senado de EE. UU.', candidates: 'Jon Ossoff (D) vs. Mike Collins (R)', hispanicShare: '25,5%', hispanicPopulation: '≈260.000' },
+        { code: 'CO-ADA', stateCode: 'CO', state: 'Colorado', county: 'Adams', race: 'CO-08', candidates: 'Gabe Evans (R) vs. Manny Rutinel (D)', hispanicShare: '44,7%', hispanicPopulation: '≈248.000' },
+        { code: 'CO-WEL', stateCode: 'CO', state: 'Colorado', county: 'Weld', race: 'CO-08', candidates: 'Gabe Evans (R) vs. Manny Rutinel (D)', hispanicShare: '32,6%', hispanicPopulation: '≈123.000' }
+      ],
       pollVotes: {
         'Fútbol juvenil': 0,
         'Turismo y ciudades sede': 0,
@@ -1163,6 +1168,18 @@
           imageAlt: 'Caravana de migrantes en su recorrido por Chiapas',
           summary: 'Más de 600 personas retomaron su recorrido desde Tapachula hacia el norte de México.',
           content: 'Más de 600 migrantes que integran la caravana “Fe y Esperanza” retomaron su recorrido desde Tapachula, Chiapas, hacia el norte de México con la intención de alcanzar la frontera con Estados Unidos. El grupo está conformado principalmente por personas procedentes de Honduras, El Salvador, Guatemala, Ecuador y Haití. El contingente salió originalmente de San Pedro Sula el 20 de septiembre y aumentó su número tras incorporar a migrantes que permanecían en el sur mexicano. El Departamento de Seguridad Nacional de Estados Unidos advirtió que las autoridades fronterizas mantienen vigilancia sobre este tipo de desplazamientos y reiteró que quienes intenten ingresar al país de manera irregular pueden ser detenidos y sometidos a procesos de deportación. La caravana continúa en Chiapas y todavía se encuentra a una distancia considerable de la frontera estadounidense.'
+        },
+        'trump-accounts-20261002': {
+          title: 'Trump Accounts: 60 millones de niños reciben una participación financiera en el futuro de EE. UU.',
+          category: 'ECONOMÍA / FAMILIAS',
+          author: 'Redacción Correo USA',
+          date: '2026-10-02',
+          location: 'Washington, Estados Unidos',
+          image: 'https://i.imgur.com/GLjtN6b.jpeg',
+          imagePosition: 'center 20%',
+          imageAlt: 'Donald Trump durante un anuncio sobre las cuentas de inversión para niños',
+          summary: 'El Tesoro anunció la inscripción automática de más de 60 millones de menores en cuentas de inversión con ventajas fiscales.',
+          content: 'Sesenta millones de niños estadounidenses quedan encaminados hacia una mayor seguridad financiera. La próxima generación de Estados Unidos recibe una participación directa en el futuro económico del país mediante las Trump Accounts, creadas durante la presidencia de Donald Trump. El Departamento del Tesoro anunció este 2 de octubre la inscripción automática de más de 60 millones de menores en estas cuentas de inversión con ventajas fiscales. El programa permite abrir una cuenta para cualquier menor de 18 años que tenga un número válido de Seguro Social. Para los ciudadanos estadounidenses nacidos entre el 1 de enero de 2025 y el 31 de diciembre de 2028, el Gobierno ofrece un aporte inicial único de 1.000 dólares. Padres, familiares, amigos y empleadores pueden sumar contribuciones dentro de los límites establecidos. El máximo anual general es de 5.000 dólares por niño y las inversiones deben dirigirse a fondos amplios del mercado accionario estadounidense con comisiones reducidas. La cuenta permanece bajo la administración del padre, madre o tutor hasta que el beneficiario cumple 18 años. El objetivo es que el crecimiento acumulado de la inversión ayude a la nueva generación a iniciar su vida adulta con una base financiera para educación, vivienda, emprendimiento o ahorro de largo plazo.'
         },
         'rick-scott-save-20261002': {
           title: 'Rick Scott presiona al Senado para aprobar identificación con foto para votar',
@@ -1406,6 +1423,7 @@
     let economicsChartInstance = null;
     let pollChartInstance = null;
     let isTickerPaused = false;
+    let selectedKeyCountyState = 'FL';
 
     /* ==========================================================================
        APPLICATION INITIALIZATION
@@ -1413,6 +1431,8 @@
     document.addEventListener('DOMContentLoaded', function() {
       renderLatestNews();
       renderPreviousNews();
+      renderKeyCountyFilters();
+      renderKeyCounties();
       initTicker();
       initDateDisplay();
       initElectionCountdown();
@@ -1499,6 +1519,91 @@
           </ul>
         </div>
       `).join('');
+    }
+
+    function keyCountyStates() {
+      const labels = { FL: 'Florida', TX: 'Texas', AZ: 'Arizona', NV: 'Nevada', PA: 'Pensilvania', GA: 'Georgia', CO: 'Colorado' };
+      return ['FL', 'TX', 'AZ', 'NV', 'PA', 'GA', 'CO'].map(code => ({ code, name: labels[code] }));
+    }
+
+    function renderKeyCountyFilters() {
+      const container = document.getElementById('key-county-filters');
+      if (!container) return;
+      const options = [{ code: 'all', name: 'Todos' }, ...keyCountyStates()];
+      container.innerHTML = options.map(option => {
+        const active = option.code === selectedKeyCountyState;
+        return `<button type="button" onclick="selectKeyCountyState('${option.code}')" aria-pressed="${active}" class="key-county-filter shrink-0 px-3 py-2 text-[10px] font-black uppercase tracking-wider border transition-colors ${active ? 'bg-redAccent border-redAccent text-white' : 'bg-creamBg border-navy/15 text-navy hover:border-redAccent'}">${escapeNewsText(option.name)}</button>`;
+      }).join('');
+    }
+
+    function renderKeyCounties() {
+      const container = document.getElementById('key-county-grid');
+      const summary = document.getElementById('key-county-summary');
+      if (!container) return;
+      const filtered = selectedKeyCountyState === 'all'
+        ? APP_DATA.keyCountyRaces
+        : APP_DATA.keyCountyRaces.filter(item => item.stateCode === selectedKeyCountyState);
+      const stateName = selectedKeyCountyState === 'all'
+        ? 'Todos los estados'
+        : keyCountyStates().find(item => item.code === selectedKeyCountyState)?.name;
+      if (summary) summary.textContent = `${stateName} · ${filtered.length} ${filtered.length === 1 ? 'condado' : 'condados'}`;
+      container.innerHTML = filtered.map(item => `
+        <button type="button" onclick="openKeyCountyModal('${item.code}')" class="w-full sm:w-[calc(50%-0.375rem)] lg:w-[calc(25%-0.563rem)] min-h-56 bg-white border border-navy/15 shadow-sm text-left p-3 flex flex-col hover:border-redAccent hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-redAccent">
+          <div class="flex items-start justify-between gap-2 border-b border-navy/10 pb-2 w-full">
+            <div>
+              <span class="text-[9px] font-black uppercase tracking-widest text-redAccent">${escapeNewsText(item.state)}</span>
+              <h3 class="font-serif text-lg font-black text-navy leading-tight">${escapeNewsText(item.county)}</h3>
+            </div>
+            <span class="bg-navy text-white text-[8px] font-black uppercase tracking-wider px-2 py-1 shrink-0">${escapeNewsText(item.race)}</span>
+          </div>
+          <p class="text-[11px] font-bold text-navy leading-snug py-3 flex-1">${escapeNewsText(item.candidates)}</p>
+          <div class="grid grid-cols-2 gap-2 w-full mt-auto">
+            <div class="bg-creamBg p-2">
+              <span class="text-[8px] font-black uppercase tracking-wider text-mutedText block">Población hispana</span>
+              <strong class="font-serif text-xl text-redAccent">${escapeNewsText(item.hispanicShare)}</strong>
+            </div>
+            <div class="bg-creamBg p-2">
+              <span class="text-[8px] font-black uppercase tracking-wider text-mutedText block">Personas</span>
+              <strong class="font-serif text-base text-navy">${escapeNewsText(item.hispanicPopulation)}</strong>
+            </div>
+          </div>
+        </button>
+      `).join('');
+    }
+
+    function selectKeyCountyState(code) {
+      if (code !== 'all' && !keyCountyStates().some(item => item.code === code)) return;
+      selectedKeyCountyState = code;
+      renderKeyCountyFilters();
+      renderKeyCounties();
+    }
+
+    function openKeyCountyModal(code) {
+      const item = APP_DATA.keyCountyRaces.find(county => county.code === code);
+      if (!item) return;
+      const content = document.getElementById('modal-content');
+      content.innerHTML = `
+        <span class="text-redAccent text-[9px] font-black uppercase tracking-widest block">CONDADOS A SEGUIR · ${escapeNewsText(item.state)}</span>
+        <h2 class="font-serif text-2xl font-extrabold text-navy leading-tight">${escapeNewsText(item.county)} County</h2>
+        <div class="bg-navy text-white p-3">
+          <span class="text-goldAccent text-[8px] font-black uppercase tracking-widest block">Contienda bajo seguimiento</span>
+          <strong class="font-serif text-xl">${escapeNewsText(item.race)}</strong>
+          <p class="text-xs text-white/85 mt-1">${escapeNewsText(item.candidates)}</p>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="bg-creamBg p-3 border border-navy/10">
+            <span class="text-[8px] font-black uppercase tracking-wider text-goldAccent block">Población hispana</span>
+            <span class="font-serif text-2xl font-black text-redAccent">${escapeNewsText(item.hispanicShare)}</span>
+          </div>
+          <div class="bg-creamBg p-3 border border-navy/10">
+            <span class="text-[8px] font-black uppercase tracking-wider text-goldAccent block">Estimación</span>
+            <span class="font-serif text-xl font-black text-navy">${escapeNewsText(item.hispanicPopulation)}</span>
+          </div>
+        </div>
+        <p class="text-[10px] text-mutedText leading-relaxed border-t border-navy/10 pt-2">La cifra describe la población del condado. Las fronteras de un distrito congresional pueden abarcar áreas diferentes. Esta selección funciona como guía editorial de cobertura rumbo al 3 de noviembre.</p>
+        <div class="pt-2 flex justify-end"><button onclick="closeModal()" class="bg-navy text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 hover:bg-redAccent transition-colors">Cerrar ficha</button></div>
+      `;
+      document.getElementById('app-modal').classList.remove('hidden');
     }
 
     function initDateDisplay() {
@@ -1852,6 +1957,18 @@
       if (matchedCounty) {
         showSection('condados');
         openCountyModal(matchedCounty.code);
+        return;
+      }
+
+      const matchedKeyCounty = APP_DATA.keyCountyRaces.find(c =>
+        c.county.toLowerCase().includes(query) ||
+        c.state.toLowerCase().includes(query) ||
+        c.race.toLowerCase().includes(query)
+      );
+      if (matchedKeyCounty) {
+        showSection('general');
+        selectKeyCountyState(matchedKeyCounty.stateCode);
+        openKeyCountyModal(matchedKeyCounty.code);
       }
     }
 
